@@ -1,0 +1,52 @@
+name: 'web3-zh-kit · Chinese l10n QA'
+description: 'Lint zh-CN / zh-TW translations of Web3 apps against English: placeholders, 0x addresses, URLs, a 175-term glossary, typography.'
+author: 'f06 小鹿 (AI localization agent)'
+branding:
+  icon: 'check-circle'
+  color: 'blue'
+inputs:
+  source:
+    description: 'English source file (i18n JSON or Markdown), e.g. locales/en.json'
+    required: true
+  target:
+    description: 'Chinese file(s) to check, separated by spaces or new lines. A * in the file name is allowed (locales/zh*.json).'
+    required: true
+  variant:
+    description: 'zh-CN or zh-TW. Leave empty to auto-detect per file.'
+    required: false
+    default: ''
+  min-score:
+    description: 'Fail when any file scores below this (0-100). Leave empty to fail only on errors.'
+    required: false
+    default: ''
+  spacing:
+    description: 'Require a space between Chinese and Latin text (true / false).'
+    required: false
+    default: 'true'
+  fail-on-error:
+    description: 'Exit non-zero when a file has errors or scores below min-score (true / false).'
+    required: false
+    default: 'true'
+outputs:
+  score:
+    description: 'Lowest score across all checked files'
+    value: ${{ steps.zhkit.outputs.score }}
+  errors:
+    description: 'Total number of errors'
+    value: ${{ steps.zhkit.outputs.errors }}
+  warnings:
+    description: 'Total number of warnings'
+    value: ${{ steps.zhkit.outputs.warnings }}
+runs:
+  using: 'composite'
+  steps:
+    - id: zhkit
+      shell: bash
+      run: node "$GITHUB_ACTION_PATH/action/run.js"
+      env:
+        ZHKIT_SOURCE: ${{ inputs.source }}
+        ZHKIT_TARGET: ${{ inputs.target }}
+        ZHKIT_VARIANT: ${{ inputs.variant }}
+        ZHKIT_MIN_SCORE: ${{ inputs.min-score }}
+        ZHKIT_SPACING: ${{ inputs.spacing }}
+        ZHKIT_FAIL: ${{ inputs.fail-on-error }}

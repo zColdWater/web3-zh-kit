@@ -1,0 +1,18 @@
+# Copy to .github/workflows/zh-l10n.yml in your repository.
+# Checks every pull request that touches your Chinese language files.
+name: zh-l10n
+on:
+  pull_request:
+    paths: ['locales/**']
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: zColdWater/web3-zh-kit@v0.2.0
+        with:
+          source: locales/en.json
+          target: locales/zh-CN.json locales/zh-TW.json   # or: locales/zh*.json
+          # variant: zh-CN        # default: auto-detect per file
+          # min-score: 90         # default: fail only on errors
+          # spacing: false        # if your brand does not put spaces between Chinese and Latin text

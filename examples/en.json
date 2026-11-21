@@ -1,0 +1,37 @@
+{
+  "app": {
+    "title": "Receipts",
+    "tagline": "Every transfer becomes a one-of-a-kind artwork."
+  },
+  "wallet": {
+    "connect": "Connect wallet",
+    "connected": "Connected as {address}",
+    "balance": "Balance: {amount} USDC",
+    "disconnect": "Disconnect"
+  },
+  "send": {
+    "title": "Send USDC on Base",
+    "amountLabel": "Amount",
+    "min": "Minimum {min} USDC",
+    "fee": "Network fee: ~{fee} (gas is sponsored by a paymaster)",
+    "confirm": "Confirm transfer",
+    "pending": "Transaction pending… {count, plural, one {# confirmation} other {# confirmations}}",
+    "success": "Done! View it on <0>BaseScan</0>.",
+    "error": "Transaction failed: %s"
+  },
+  "safety": {
+    "seed": "Never share your seed phrase. Base support will never ask for it.",
+    "approval": "Review your token approvals regularly and revoke the ones you no longer use.",
+    "poison": "Address poisoning alert: the address you pasted looks like one in your history, but it is different.",
+    "verify": "Always verify the contract address: 0x833589fcd6edb6e08f4c7c32d4f71b54bda02913 (USDC on Base)."
+  },
+  "staking": {
+    "title": "Staking rewards",
+    "apy": "Estimated APY: {apy}%",
+    "unstake": "Unstake anytime. Rewards can be claimed every 24 hours."
+  },
+  "docs": {
+    "learnMore": "Learn more at https://docs.base.org",
+    "x402": "Pay per request with x402 — no account, no API key."
+  }
+}

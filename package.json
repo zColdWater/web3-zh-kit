@@ -1,0 +1,16 @@
+{
+  "name": "web3-zh-kit",
+  "version": "0.2.0",
+  "description": "Zero-dependency QA for English→Chinese (zh-CN / zh-TW) Web3 translations: placeholders, addresses, a 175-term Web3 glossary, Simplified/Traditional mixing, regional wording, Chinese typography. CLI, GitHub Action, in-browser checker.",
+  "license": "MIT",
+  "homepage": "https://zcoldwater.github.io/web3-zh-kit/",
+  "repository": { "type": "git", "url": "https://github.com/zColdWater/web3-zh-kit.git" },
+  "funding": { "type": "individual", "url": "https://zcoldwater.github.io/web3-zh-kit/#support" },
+  "bin": { "zhlint": "zhlint.js" },
+  "scripts": {
+    "build": "node build.js",
+    "test": "node test/run.js && node build.js && node test/module.test.mjs && node test/site.test.js && node test/action.test.js"
+  },
+  "engines": { "node": ">=16" },
+  "keywords": ["localization", "l10n", "i18n", "chinese", "zh-CN", "zh-TW", "web3", "translation", "glossary", "github-action", "x402"]
+}

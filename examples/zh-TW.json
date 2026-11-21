@@ -1,0 +1,37 @@
+{
+  "app": {
+    "title": "Receipts",
+    "tagline": "每一筆轉帳，都會變成一件獨一無二的作品。"
+  },
+  "wallet": {
+    "connect": "連接錢包",
+    "connected": "已連接：{address}",
+    "balance": "餘額：{amount} USDC",
+    "disconnect": "中斷連線"
+  },
+  "send": {
+    "title": "在 Base 上傳送 USDC",
+    "amountLabel": "金額",
+    "min": "最低 {min} USDC",
+    "fee": "網路費用：約 {fee}（Gas 由 Paymaster 代付）",
+    "confirm": "確認轉帳",
+    "pending": "交易待確認……{count, plural, other {已確認 # 次}}",
+    "success": "完成！在 <0>BaseScan</0> 上查看。",
+    "error": "交易失敗：%s"
+  },
+  "safety": {
+    "seed": "切勿向任何人透露你的助記詞。Base 官方客服絕不會向你索取。",
+    "approval": "請定期檢查你的代幣授權，撤銷不再使用的授權。",
+    "poison": "地址投毒警告：你貼上的地址與歷史紀錄中的某個地址很像，但並不相同。",
+    "verify": "請務必核對合約地址：0x833589fcd6edb6e08f4c7c32d4f71b54bda02913（Base 上的 USDC）。"
+  },
+  "staking": {
+    "title": "質押獎勵",
+    "apy": "預估年化收益率（APY）：{apy}%",
+    "unstake": "可隨時解除質押。獎勵每 24 小時可領取一次。"
+  },
+  "docs": {
+    "learnMore": "了解更多：https://docs.base.org",
+    "x402": "透過 x402 按次付費——無需註冊帳戶，也無需 API 金鑰。"
+  }
+}

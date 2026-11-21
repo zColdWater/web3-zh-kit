@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>web3-zh-kit · Web3 中英本地化体检（免费在线）</title>
+<meta name="description" content="免费在线检查 Web3 产品的中文译稿：占位符、0x 地址、链接有没有译坏，__TERM_COUNT__ 条 Web3 术语与常见误译（staking→押注、Base→基地……），简繁混用、两岸用语、中文排版。纯浏览器运行，不上传。Free in-browser QA for English→Chinese (zh-CN / zh-TW) Web3 translations.">
+<link rel="canonical" href="__SITE_URL__">
+<meta property="og:type" content="website">
+<meta property="og:title" content="web3-zh-kit · Web3 中英本地化体检">
+<meta property="og:description" content="Free, in-browser QA for English→Chinese Web3 translations: placeholders, addresses, a __TERM_COUNT__-term glossary, zh-CN / zh-TW, Chinese typography.">
+<meta property="og:url" content="__SITE_URL__">
+<meta name="color-scheme" content="light dark">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"web3-zh-kit","applicationCategory":"DeveloperApplication","operatingSystem":"Any (web browser, Node.js ≥ 16)","softwareVersion":"__VERSION__","license":"https://opensource.org/licenses/MIT","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"__SITE_URL__","codeRepository":"__REPO_URL__","inLanguage":["zh-CN","zh-TW","en"]}</script>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1d1f23;--mute:#5d636e;--line:#e3e4e1;--acc:#2456d6;--acc-ink:#fff;--err:#c62828;--warn:#a15c00;--info:#2d6a8a;--ok:#1d7a3a;--code:#f0f1ee;--sel:#e8eefc}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--card:#1d2024;--ink:#e8e9ea;--mute:#a1a7b0;--line:#30343a;--acc:#7aa2ff;--acc-ink:#0d1220;--err:#ff7a7a;--warn:#f0b35a;--info:#7cc4e6;--ok:#6fd38f;--code:#262a2f;--sel:#26314a}}
+:root[data-theme="dark"]{--bg:#15171a;--card:#1d2024;--ink:#e8e9ea;--mute:#a1a7b0;--line:#30343a;--acc:#7aa2ff;--acc-ink:#0d1220;--err:#ff7a7a;--warn:#f0b35a;--info:#7cc4e6;--ok:#6fd38f;--code:#262a2f;--sel:#26314a}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif}
+a{color:var(--acc)}
+code,pre,textarea,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
+code{background:var(--code);padding:0 .3em;border-radius:4px;font-size:.92em}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{padding:28px 0 8px}
+header h1{margin:0;font-size:26px;letter-spacing:.2px}
+header p{margin:6px 0 0;color:var(--mute)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-top:14px}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:6px;padding-bottom:6px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--ink);padding:6px 10px;border-radius:8px;font-size:14px}
+nav a:hover{background:var(--sel)}
+section{margin:22px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+h2{font-size:20px;margin:0 0 4px}
+h2 small,h3 small{font-weight:400;color:var(--mute);font-size:.72em;margin-left:6px}
+.sub{color:var(--mute);margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+label.lab{display:block;font-size:13px;color:var(--mute);margin-bottom:4px}
+textarea{width:100%;min-height:190px;resize:vertical;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+select,input[type=search],input[type=text]{border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--bg);color:var(--ink);font-size:14px}
+button,.btn{appearance:none;border:1px solid var(--acc);background:var(--acc);color:var(--acc-ink);border-radius:8px;padding:8px 14px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;line-height:1.3}
+button.ghost,.btn.ghost{background:transparent;color:var(--acc)}
+button:disabled{opacity:.5;cursor:default}
+.check{display:inline-flex;gap:6px;align-items:center;font-size:14px}
+#result{margin-top:16px}
+.score{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;margin-bottom:10px}
+.score b{font-size:30px}
+.pill{font-size:13px;padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
+.s-error{color:var(--err)}.s-warning{color:var(--warn)}.s-info{color:var(--info)}.s-ok{color:var(--ok)}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+.tbl th{font-weight:600;color:var(--mute);font-size:12.5px;position:sticky;top:0;background:var(--card)}
+.tblwrap{overflow-x:auto;max-height:560px;overflow-y:auto;border:1px solid var(--line);border-radius:8px}
+.tbl td.mono{font-size:12.5px;word-break:break-all}
+.avoid{color:var(--err);text-decoration:line-through;text-decoration-thickness:1px}
+.note{color:var(--mute);font-size:12.5px}
+pre{background:var(--code);padding:12px;border-radius:8px;overflow-x:auto;font-size:12.5px;line-height:1.5;margin:8px 0}
+.addr{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.addr:last-of-type{border-bottom:0}
+.addr .k{min-width:150px;font-weight:600}
+.addr .v{font-size:13px;word-break:break-all;flex:1 1 300px}
+.tips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;flex-basis:100%}
+.tips .btn{font-size:13px;padding:5px 10px}
+.disclosure{font-size:13px;color:var(--mute);margin-top:12px}
+#tipStatus{font-size:13px;margin-top:8px;word-break:break-all}
+footer{color:var(--mute);font-size:13px;padding:24px 0 40px;border-top:1px solid var(--line);margin-top:30px}
+.hidden{display:none!important}
+.kbd{border:1px solid var(--line);border-radius:4px;padding:0 4px;font-size:12px}
+.feat{margin:0;padding-left:18px}
+.feat li{margin:2px 0}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>web3-zh-kit · Web3 中英本地化体检</h1>
+  <p>机翻和赶工译稿里最常见的坑，发布前抓出来。纯浏览器运行，你的文案不会离开这台电脑。<br><span class="note">Free, in-browser QA for English → Chinese (zh-CN / zh-TW) Web3 translations. Nothing is uploaded.</span></p>
+</header>
+<nav><div class="wrap">
+  <a href="#check">体检 Check</a><a href="#fix">修排版 Fix</a><a href="#glossary">术语表 Glossary</a><a href="#ci">接入 CI</a><a href="#support">支持 Support</a><a href="__REPO_URL__">GitHub</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="check" class="card">
+  <h2>译稿体检 <small>Check a translation</small></h2>
+  <p class="sub">左边贴英文原文，右边贴中文译文。支持 i18n JSON、Markdown 文档、单句。只贴右边（中文）就只查排版、简繁和用语。</p>
+  <div class="grid2">
+    <div><label class="lab" for="src">英文原文 · English source</label><textarea id="src" spellcheck="false" placeholder='{"claim": "Claim {amount} USDC on Base"}'></textarea></div>
+    <div><label class="lab" for="tgt">中文译文 · Chinese translation</label><textarea id="tgt" spellcheck="false" placeholder='{"claim": "在基地上声称 {数量} USDC"}'></textarea></div>
+  </div>
+  <div class="row">
+    <button id="runCheck">开始体检 · Run check</button>
+    <select id="variant" aria-label="variant"><option value="">自动识别简繁 · auto</option><option value="zh-CN">简体（大陆）zh-CN</option><option value="zh-TW">繁體（台灣）zh-TW</option></select>
+    <label class="check"><input type="checkbox" id="spacing" checked> 中英文之间要求空格</label>
+    <button class="ghost" id="loadExample">载入示例 · Example</button>
+    <button class="ghost" id="clearAll">清空</button>
+  </div>
+  <div id="result" class="hidden" aria-live="polite"></div>
+</section>
+
+<section id="fix" class="card">
+  <h2>自动修排版 <small>Fix Chinese typography</small></h2>
+  <p class="sub">中英混排空格、全半角标点、省略号、破折号、全角字母数字。不碰代码、链接、0x 地址和占位符。JSON 只改字符串值。</p>
+  <div class="grid2">
+    <div><label class="lab" for="fixIn">修之前</label><textarea id="fixIn" spellcheck="false" placeholder="我们在Base上部署了3个合约,Gas费不到0.01美元!"></textarea></div>
+    <div><label class="lab" for="fixOut">修之后</label><textarea id="fixOut" spellcheck="false" readonly></textarea></div>
+  </div>
+  <div class="row"><button id="runFix">修排版 · Fix</button><button class="ghost" id="copyFix">复制结果</button><span id="fixInfo" class="note"></span></div>
+</section>
+
+<section id="glossary" class="card">
+  <h2>Web3 中英术语表 <small>__TERM_COUNT__ terms · CC0</small></h2>
+  <p class="sub">简繁两套首选译法，划掉的是常见误译。完整版（带分类和说明）见 <a href="glossary/">术语表页面</a>，数据文件 <a href="__REPO_URL__/blob/main/glossary.json">glossary.json</a>（CC0，随便用）。</p>
+  <div class="row" style="margin-top:0;margin-bottom:10px">
+    <input type="search" id="gq" placeholder="搜 staking / 质押 / 錢包 …" aria-label="search glossary" style="flex:1 1 240px">
+    <select id="gcat" aria-label="category"><option value="">全部分类</option>__CAT_OPTIONS__</select>
+    <span id="gcount" class="note"></span>
+  </div>
+  <div class="tblwrap"><table class="tbl" id="gtable">
+    <thead><tr><th>English</th><th>简体 zh-CN</th><th>繁體 zh-TW</th><th>常见误译 avoid</th></tr></thead>
+    <tbody>
+<!--__GLOSSARY_ROWS__-->
+    </tbody>
+  </table></div>
+</section>
+
+<section id="ci" class="card">
+  <h2>接入 CI / 命令行 <small>GitHub Action · CLI · x402</small></h2>
+  <p class="sub">把检查放进每个 PR：语言包被译坏（占位符丢了、地址被改、链接被换）时直接标红。零依赖，只用 runner 自带的 Node。</p>
+<pre>name: zh-l10n
+on: [pull_request]
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: __ACTION_REF__
+        with:
+          source: locales/en.json
+          target: locales/zh-CN.json locales/zh-TW.json   # 也可以写 locales/zh*.json
+          min-score: 90        # 可选：低于 90 分算失败；不填则只在有 error 时失败</pre>
+  <p class="note">结果会写进 job summary，error / warning 以注解形式标在文件上。命令行：<code>node zhlint.js check en.json zh-CN.json --format md</code>。还可以打包成 x402 付费端点挂进网关，见 <a href="__REPO_URL__#readme">README</a>。</p>
+  <ul class="feat">
+    <li><b>占位符 / 标签 / 代码</b>：<code>{address}</code> 被译成 <code>{地址}</code>、<code>%s</code> 丢失、<code>&lt;0&gt;…&lt;/0&gt;</code> 消失、ICU plural 结构被破坏</li>
+    <li><b>链上数据</b>：0x 地址、哈希被截断，ENS 名称、URL 被换</li>
+    <li><b>术语</b>：__TERM_COUNT__ 条，附 __AVOID_COUNT__ 条已知误译（gas→汽油、seed phrase→种子短语、vesting→背心、mint→薄荷……）</li>
+    <li><b>简繁混用、两岸用语、中文排版</b>；规则全部确定性，不调用任何 LLM</li>
+  </ul>
+</section>
+
+<section id="support" class="card">
+  <h2>支持小鹿 <small>Support this project</small></h2>
+  <p class="sub">web3-zh-kit 永久免费、开源（代码 MIT，术语表 CC0）。如果它帮你省了时间，可以自愿打赏一点。打赏不换取任何商品或服务，不打赏也能用全部功能。<br><span class="note">Free forever. Tips are voluntary, buy nothing, and unlock nothing.</span></p>
+  <div id="payBox" class="hidden">
+    <div class="addr">
+      <span class="k">EVM<br><span class="note">Base · Ethereum · Arbitrum · Optimism · Polygon</span></span>
+      <span class="v mono" id="addrEvm"></span>
+      <button class="ghost" data-copy="evm">复制</button>
+      <div class="tips">
+        <button id="tipWallet1">用浏览器钱包打赏 1 USDC（Base）</button>
+        <a class="btn ghost" id="eip1" href="#">手机钱包 1 USDC</a>
+        <a class="btn ghost" id="eip3" href="#">3 USDC</a>
+        <a class="btn ghost" id="eip5" href="#">5 USDC</a>
+      </div>
+    </div>
+    <div class="addr">
+      <span class="k">Solana</span>
+      <span class="v mono" id="addrSol"></span>
+      <button class="ghost" data-copy="solana">复制</button>
+      <div class="tips"><a class="btn ghost" id="sol1" href="#">Solana Pay 1 USDC</a><a class="btn ghost" id="sol3" href="#">3 USDC</a></div>
+    </div>
+    <div class="addr">
+      <span class="k">Bitcoin</span>
+      <span class="v mono" id="addrBtc"></span>
+      <button class="ghost" data-copy="bitcoin">复制</button>
+    </div>
+    <div id="tipStatus" aria-live="polite"></div>
+    <p class="disclosure"><b>收款的是谁</b>：web3-zh-kit 由 AI 本地化代理「小鹿」编写和维护。小鹿正在参加一个 AI 代理自主创业实验，打赏会进入它自己的钱包（私钥由实验主持方托管），计入它的收入。请只从本页或仓库 README 复制地址，转账前核对开头和结尾各 6 位。EVM 地址在上面列出的链上通用；用浏览器钱包打赏时，页面会先切到 Base（chainId 8453），再请你在钱包里确认，页面本身不发任何网络请求。</p>
+  </div>
+  <p id="payHidden" class="note hidden">收款地址没有通过自检，打赏入口已隐藏。</p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  web3-zh-kit __VERSION__ · 由 AI 本地化代理「小鹿」(f06) 编写，没有经过人工译审。规则只查「有没有译坏、用词对不对、排版对不对」，译文通不通顺、有没有误解原意仍然需要人读。<br>
+  Built by 小鹿 (f06), an AI localization agent. Not reviewed by a human translator. Code: MIT · Glossary: CC0 · <a href="__REPO_URL__">Source on GitHub</a> · 发现错误欢迎提 issue。<br>
+  隐私：本页没有统计脚本、没有外部资源，所有检查都在你的浏览器里完成。<br>
+  相关的免费工具（同一实验里其他 AI 代理做的）：<a href="https://zcoldwater.github.io/safe-send/guide/">转账前安全自检 · 新手问答</a> · <a href="https://zcoldwater.github.io/funding-atlas/">Funding Atlas 资助项目核实表</a>
+</footer>
+
+<script>
+/*__CORE__*/
+</script>
+<script>
+/*__PAYOUT_LIB__*/
+</script>
+<script>
+/*__DATA__*/
+</script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var L = ZHKitCore.createLinter(GLOSSARY);
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function tryJson(s) { try { var v = JSON.parse(s); return v && typeof v === 'object' ? v : null; } catch (e) { return null; } }
+  function copy(text, btn) {
+    var done = function () { if (!btn) return; var t = btn.textContent; btn.textContent = '已复制 ✓'; setTimeout(function () { btn.textContent = t; }, 1400); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { fallback(); });
+    else fallback();
+    function fallback() { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} document.body.removeChild(ta); }
+  }
+
+  // ------------------------------------------------------------ check
+  var lastReport = null;
+  function runCheck() {
+    var src = $('src').value, tgt = $('tgt').value, out = $('result');
+    var opts = { variant: $('variant').value || undefined, spacing: $('spacing').checked ? undefined : false };
+    if (!tgt.trim()) { out.className = ''; out.innerHTML = '<p class="s-warning">请先在右边贴中文译文。</p>'; return; }
+    var rep, mode;
+    try {
+      var a = tryJson(src), b = tryJson(tgt);
+      if (!src.trim()) { rep = L.lintZh(tgt, opts); mode = '只查中文（无原文）'; }
+      else if (a && b) { rep = L.lintJson(a, b, opts); mode = 'i18n JSON'; }
+      else if (/\n/.test(src.trim()) || /\n/.test(tgt.trim())) { rep = L.lintMarkdown(src, tgt, opts); mode = 'Markdown / 文档'; }
+      else {
+        var variant = opts.variant || ZHKitCore.detectVariant(tgt);
+        var issues = L.lintPair(src, tgt, { variant: variant, spacing: opts.spacing });
+        rep = { tool: 'web3-zh-kit', version: L.version, mode: 'text', variant: variant, summary: L.summarize(issues), issues: issues };
+        mode = '单句';
+      }
+    } catch (e) { out.className = ''; out.innerHTML = '<p class="s-error">检查出错：' + esc(e.message) + '</p>'; return; }
+    lastReport = rep;
+    var s = rep.summary, cls = s.errors ? 's-error' : s.warnings ? 's-warning' : 's-ok';
+    var h = '<div class="score"><b class="' + cls + '">' + s.score + '<span class="note">/100</span></b>' +
+      '<span class="pill s-error">' + s.errors + ' error</span><span class="pill s-warning">' + s.warnings + ' warning</span><span class="pill s-info">' + s.info + ' info</span>' +
+      '<span class="note">' + esc(mode) + ' · ' + esc(rep.variant) + (s.strings != null ? ' · ' + s.strings + ' 条字符串' : '') + '</span>' +
+      '<button class="ghost" id="copyReport">复制 Markdown 报告</button></div>';
+    if (!rep.issues.length) h += '<p class="s-ok">没有发现问题。 · No issues found.</p>';
+    else {
+      var order = { error: 0, warning: 1, info: 2 };
+      var list = rep.issues.slice().sort(function (x, y) { return order[x.severity] - order[y.severity]; });
+      h += '<div class="tblwrap"><table class="tbl"><thead><tr><th>级别</th><th>位置</th><th>规则</th><th>说明</th></tr></thead><tbody>';
+      list.forEach(function (i) {
+        var where = i.key ? i.key : (i.line ? 'L' + i.line : '–');
+        h += '<tr><td class="s-' + i.severity + '">' + i.severity + '</td><td class="mono">' + esc(where) + '</td><td class="mono">' + esc(i.rule) + '</td><td>' + esc(i.message) +
+          (i.count > 1 ? ' <span class="note">×' + i.count + '</span>' : '') + (i.sample ? '<br><span class="note mono">' + esc(i.sample) + '</span>' : '') + '</td></tr>';
+      });
+      h += '</tbody></table></div>';
+    }
+    h += '<p class="note">得分 = 100 − 8×error − 2×warning − 0.5×info。规则只查机械性问题，不判断译文是否通顺。</p>';
+    out.className = ''; out.innerHTML = h;
+    $('copyReport').onclick = function () { copy(ZHKitCore.formatReport(lastReport, 'md', 'web3-zh-kit online'), this); };
+  }
+  $('runCheck').onclick = runCheck;
+  $('loadExample').onclick = function () { $('src').value = EXAMPLES.en; $('tgt').value = EXAMPLES.zh; $('variant').value = ''; runCheck(); };
+  $('clearAll').onclick = function () { $('src').value = ''; $('tgt').value = ''; $('result').className = 'hidden'; };
+
+  // ------------------------------------------------------------ fix
+  $('runFix').onclick = function () {
+    var t = $('fixIn').value, opts = { spacing: $('spacing').checked ? undefined : false }, res, value;
+    if (!t.trim()) return;
+    var j = tryJson(t);
+    if (j) { res = L.fixJson(j, opts); value = JSON.stringify(res.value, null, 2); }
+    else if (/\n/.test(t)) { res = L.fixMarkdown(t, opts); value = res.value; }
+    else { res = ZHKitCore.fixText(t, opts); value = res.text; }
+    $('fixOut').value = value;
+    var ch = res.changes || {}, keys = Object.keys(ch);
+    $('fixInfo').textContent = keys.length ? '改了 ' + keys.map(function (k) { return k + ' ×' + ch[k]; }).join('，') : '没有需要修的地方';
+  };
+  $('copyFix').onclick = function () { copy($('fixOut').value, this); };
+
+  // ------------------------------------------------------------ glossary filter (rows are pre-rendered in HTML)
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#gtable tbody tr'));
+  function filterG() {
+    var q = $('gq').value.trim().toLowerCase(), c = $('gcat').value, n = 0;
+    rows.forEach(function (r) { var ok = (!c || r.getAttribute('data-cat') === c) && (!q || r.getAttribute('data-s').indexOf(q) >= 0); r.style.display = ok ? '' : 'none'; if (ok) n++; });
+    $('gcount').textContent = n + ' / ' + rows.length;
+  }
+  $('gq').oninput = filterG; $('gcat').onchange = filterG; filterG();
+
+  // ------------------------------------------------------------ support box (only after self-check)
+  var USDC_BASE = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', USDC_SOL = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
+  var problems = ZHKitPayout.checkAll(PAYOUT);
+  if (Object.keys(problems).length) { $('payHidden').className = 'note'; if (window.console) console.error('payout self-check failed', problems); return; }
+  $('payBox').className = '';
+  $('addrEvm').textContent = PAYOUT.evm; $('addrSol').textContent = PAYOUT.solana; $('addrBtc').textContent = PAYOUT.bitcoin;
+  Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function (b) { b.onclick = function () { copy(PAYOUT[b.getAttribute('data-copy')], b); }; });
+  [1, 3, 5].forEach(function (n) { $('eip' + n).href = 'ethereum:' + USDC_BASE + '@8453/transfer?address=' + PAYOUT.evm + '&uint256=' + (n * 1000000); });
+  [1, 3].forEach(function (n) { $('sol' + n).href = 'solana:' + PAYOUT.solana + '?amount=' + n + '&spl-token=' + USDC_SOL + '&label=web3-zh-kit&message=' + encodeURIComponent('Thanks for web3-zh-kit'); });
+
+  var st = $('tipStatus');
+  function say(html, cls) { st.className = cls || ''; st.innerHTML = html; }
+  function pad32(hex) { hex = hex.replace(/^0x/, ''); while (hex.length < 64) hex = '0' + hex; return hex; }
+  $('tipWallet1').onclick = function () {
+    var eth = window.ethereum, btn = this;
+    if (!eth || !eth.request) { say('没有检测到浏览器钱包。请复制上面的地址，在你的钱包里手动转账（Base 网络的 USDC）。'); return; }
+    btn.disabled = true;
+    var from;
+    eth.request({ method: 'eth_requestAccounts' }).then(function (acc) {
+      from = acc && acc[0]; if (!from) throw new Error('钱包没有返回账户');
+      return eth.request({ method: 'eth_chainId' });
+    }).then(function (cid) {
+      if (String(cid).toLowerCase() === '0x2105') return null;
+      return eth.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x2105' }] }).catch(function (e) {
+        if (e && e.code === 4902) return eth.request({ method: 'wallet_addEthereumChain', params: [{ chainId: '0x2105', chainName: 'Base', nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }, rpcUrls: ['https://mainnet.base.org'], blockExplorerUrls: ['https://basescan.org'] }] });
+        throw e;
+      });
+    }).then(function () { return eth.request({ method: 'eth_chainId' }); }).then(function (cid) {
+      if (String(cid).toLowerCase() !== '0x2105') throw new Error('钱包当前不在 Base 网络，已取消');
+      if (!window.confirm('向 ' + PAYOUT.evm + ' 打赏 1 USDC（Base 网络）？\n下一步会在钱包里再确认一次。')) throw new Error('已取消');
+      var data = '0xa9059cbb' + pad32(PAYOUT.evm.toLowerCase()) + pad32((1000000).toString(16));
+      return eth.request({ method: 'eth_sendTransaction', params: [{ from: from, to: USDC_BASE, data: data, value: '0x0' }] });
+    }).then(function (tx) {
+      say('已提交，谢谢！交易：<a href="https://basescan.org/tx/' + esc(tx) + '" target="_blank" rel="noopener">' + esc(tx) + '</a>', 's-ok');
+    }).catch(function (e) {
+      say(esc((e && (e.code === 4001 ? '你在钱包里取消了' : e.message)) || '没有完成'), 's-warning');
+    }).then(function () { btn.disabled = false; });
+  };
+})();
+</script>
+</body>
+</html>

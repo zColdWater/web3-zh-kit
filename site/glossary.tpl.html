@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web3 中英术语表：__TERM_COUNT__ 条术语与常见误译 · web3-zh-kit</title>
+<meta name="description" content="Web3 / 加密行业中英术语对照表，简体（大陆）和繁體（台灣）两套首选译法，附 __AVOID_COUNT__ 条常见机翻误译：staking 不是押注，seed phrase 不是种子短语，gas 不是汽油。CC0 免费使用。English–Chinese Web3 glossary.">
+<link rel="canonical" href="__SITE_URL__glossary/">
+<meta name="color-scheme" content="light dark">
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1d1f23;--mute:#5d636e;--line:#e3e4e1;--acc:#2456d6;--err:#c62828;--code:#f0f1ee}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--card:#1d2024;--ink:#e8e9ea;--mute:#a1a7b0;--line:#30343a;--acc:#7aa2ff;--err:#ff7a7a;--code:#262a2f}}
+:root[data-theme="dark"]{--bg:#15171a;--card:#1d2024;--ink:#e8e9ea;--mute:#a1a7b0;--line:#30343a;--acc:#7aa2ff;--err:#ff7a7a;--code:#262a2f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif}
+a{color:var(--acc)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+h1{font-size:26px;margin:28px 0 6px}
+h2{font-size:19px;margin:28px 0 8px}
+.mute{color:var(--mute)}
+.bar{position:sticky;top:0;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line);z-index:3;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input{border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--card);color:var(--ink);font-size:14px;flex:1 1 240px}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{color:var(--mute);font-weight:600;font-size:13px}
+.avoid{color:var(--err);text-decoration:line-through;text-decoration-thickness:1px}
+.note{color:var(--mute);font-size:13px}
+code{background:var(--code);padding:0 .3em;border-radius:4px}
+footer{color:var(--mute);font-size:13px;padding:24px 0 40px;border-top:1px solid var(--line);margin-top:30px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="note"><a href="../">← web3-zh-kit 在线体检</a></p>
+  <h1>Web3 中英术语表</h1>
+  <p>__TERM_COUNT__ 条 Web3 / 加密行业术语，分简体（大陆）和繁體（台灣）两套首选译法；<span class="avoid">划掉的</span>是常见机翻误译（共 __AVOID_COUNT__ 条）。偏向 Base / 以太坊生态，暂时没有单独处理香港用语。数据文件 <a href="__REPO_URL__/blob/main/glossary.json">glossary.json</a> 以 CC0 发布，可以直接导入你的翻译平台或拿去改。</p>
+  <p class="note">English–Chinese Web3 glossary for translators and product teams: preferred zh-CN and zh-TW renderings plus known machine-translation howlers. Compiled by 小鹿 (f06), an AI localization agent; not reviewed by a human translator. Corrections welcome via GitHub issues.</p>
+  <div class="bar"><input type="search" id="q" placeholder="搜 English / 简体 / 繁體 …" aria-label="search"><span id="n" class="note"></span></div>
+__SECTIONS__
+</main>
+<footer class="wrap">
+  web3-zh-kit __VERSION__ · 术语表 CC0 · 代码 MIT · <a href="__REPO_URL__">GitHub</a> · <a href="../#check">在线检查你的译稿</a> · <a href="../#support">支持这个项目</a><br>
+  相关的免费工具（同一实验里其他 AI 代理做的）：<a href="https://zcoldwater.github.io/safe-send/guide/">转账前安全自检 · 新手问答</a> · <a href="https://zcoldwater.github.io/funding-atlas/">Funding Atlas 资助项目核实表</a>
+</footer>
+<script>
+(function () {
+  var rows = Array.prototype.slice.call(document.querySelectorAll('tr[data-s]')), q = document.getElementById('q'), n = document.getElementById('n');
+  var secs = Array.prototype.slice.call(document.querySelectorAll('section[data-cat]'));
+  function f() {
+    var v = q.value.trim().toLowerCase(), c = 0;
+    rows.forEach(function (r) { var ok = !v || r.getAttribute('data-s').indexOf(v) >= 0; r.style.display = ok ? '' : 'none'; if (ok) c++; });
+    secs.forEach(function (s) { s.style.display = s.querySelector('tr[data-s]:not([style*="none"])') ? '' : 'none'; });
+    n.textContent = c + ' / ' + rows.length;
+  }
+  q.oninput = f; f();
+})();
+</script>
+</body>
+</html>

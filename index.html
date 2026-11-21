@@ -1,0 +1,1164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>web3-zh-kit · Web3 中英本地化体检（免费在线）</title>
+<meta name="description" content="免费在线检查 Web3 产品的中文译稿：占位符、0x 地址、链接有没有译坏，175 条 Web3 术语与常见误译（staking→押注、Base→基地……），简繁混用、两岸用语、中文排版。纯浏览器运行，不上传。Free in-browser QA for English→Chinese (zh-CN / zh-TW) Web3 translations.">
+<link rel="canonical" href="https://zcoldwater.github.io/web3-zh-kit/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="web3-zh-kit · Web3 中英本地化体检">
+<meta property="og:description" content="Free, in-browser QA for English→Chinese Web3 translations: placeholders, addresses, a 175-term glossary, zh-CN / zh-TW, Chinese typography.">
+<meta property="og:url" content="https://zcoldwater.github.io/web3-zh-kit/">
+<meta name="color-scheme" content="light dark">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"web3-zh-kit","applicationCategory":"DeveloperApplication","operatingSystem":"Any (web browser, Node.js ≥ 16)","softwareVersion":"0.2.0","license":"https://opensource.org/licenses/MIT","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://zcoldwater.github.io/web3-zh-kit/","codeRepository":"https://github.com/zColdWater/web3-zh-kit","inLanguage":["zh-CN","zh-TW","en"]}</script>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1d1f23;--mute:#5d636e;--line:#e3e4e1;--acc:#2456d6;--acc-ink:#fff;--err:#c62828;--warn:#a15c00;--info:#2d6a8a;--ok:#1d7a3a;--code:#f0f1ee;--sel:#e8eefc}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--card:#1d2024;--ink:#e8e9ea;--mute:#a1a7b0;--line:#30343a;--acc:#7aa2ff;--acc-ink:#0d1220;--err:#ff7a7a;--warn:#f0b35a;--info:#7cc4e6;--ok:#6fd38f;--code:#262a2f;--sel:#26314a}}
+:root[data-theme="dark"]{--bg:#15171a;--card:#1d2024;--ink:#e8e9ea;--mute:#a1a7b0;--line:#30343a;--acc:#7aa2ff;--acc-ink:#0d1220;--err:#ff7a7a;--warn:#f0b35a;--info:#7cc4e6;--ok:#6fd38f;--code:#262a2f;--sel:#26314a}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif}
+a{color:var(--acc)}
+code,pre,textarea,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
+code{background:var(--code);padding:0 .3em;border-radius:4px;font-size:.92em}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{padding:28px 0 8px}
+header h1{margin:0;font-size:26px;letter-spacing:.2px}
+header p{margin:6px 0 0;color:var(--mute)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-top:14px}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:6px;padding-bottom:6px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--ink);padding:6px 10px;border-radius:8px;font-size:14px}
+nav a:hover{background:var(--sel)}
+section{margin:22px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+h2{font-size:20px;margin:0 0 4px}
+h2 small,h3 small{font-weight:400;color:var(--mute);font-size:.72em;margin-left:6px}
+.sub{color:var(--mute);margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+label.lab{display:block;font-size:13px;color:var(--mute);margin-bottom:4px}
+textarea{width:100%;min-height:190px;resize:vertical;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+select,input[type=search],input[type=text]{border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--bg);color:var(--ink);font-size:14px}
+button,.btn{appearance:none;border:1px solid var(--acc);background:var(--acc);color:var(--acc-ink);border-radius:8px;padding:8px 14px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;line-height:1.3}
+button.ghost,.btn.ghost{background:transparent;color:var(--acc)}
+button:disabled{opacity:.5;cursor:default}
+.check{display:inline-flex;gap:6px;align-items:center;font-size:14px}
+#result{margin-top:16px}
+.score{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;margin-bottom:10px}
+.score b{font-size:30px}
+.pill{font-size:13px;padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
+.s-error{color:var(--err)}.s-warning{color:var(--warn)}.s-info{color:var(--info)}.s-ok{color:var(--ok)}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+.tbl th{font-weight:600;color:var(--mute);font-size:12.5px;position:sticky;top:0;background:var(--card)}
+.tblwrap{overflow-x:auto;max-height:560px;overflow-y:auto;border:1px solid var(--line);border-radius:8px}
+.tbl td.mono{font-size:12.5px;word-break:break-all}
+.avoid{color:var(--err);text-decoration:line-through;text-decoration-thickness:1px}
+.note{color:var(--mute);font-size:12.5px}
+pre{background:var(--code);padding:12px;border-radius:8px;overflow-x:auto;font-size:12.5px;line-height:1.5;margin:8px 0}
+.addr{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.addr:last-of-type{border-bottom:0}
+.addr .k{min-width:150px;font-weight:600}
+.addr .v{font-size:13px;word-break:break-all;flex:1 1 300px}
+.tips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;flex-basis:100%}
+.tips .btn{font-size:13px;padding:5px 10px}
+.disclosure{font-size:13px;color:var(--mute);margin-top:12px}
+#tipStatus{font-size:13px;margin-top:8px;word-break:break-all}
+footer{color:var(--mute);font-size:13px;padding:24px 0 40px;border-top:1px solid var(--line);margin-top:30px}
+.hidden{display:none!important}
+.kbd{border:1px solid var(--line);border-radius:4px;padding:0 4px;font-size:12px}
+.feat{margin:0;padding-left:18px}
+.feat li{margin:2px 0}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>web3-zh-kit · Web3 中英本地化体检</h1>
+  <p>机翻和赶工译稿里最常见的坑，发布前抓出来。纯浏览器运行，你的文案不会离开这台电脑。<br><span class="note">Free, in-browser QA for English → Chinese (zh-CN / zh-TW) Web3 translations. Nothing is uploaded.</span></p>
+</header>
+<nav><div class="wrap">
+  <a href="#check">体检 Check</a><a href="#fix">修排版 Fix</a><a href="#glossary">术语表 Glossary</a><a href="#ci">接入 CI</a><a href="#support">支持 Support</a><a href="https://github.com/zColdWater/web3-zh-kit">GitHub</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="check" class="card">
+  <h2>译稿体检 <small>Check a translation</small></h2>
+  <p class="sub">左边贴英文原文，右边贴中文译文。支持 i18n JSON、Markdown 文档、单句。只贴右边（中文）就只查排版、简繁和用语。</p>
+  <div class="grid2">
+    <div><label class="lab" for="src">英文原文 · English source</label><textarea id="src" spellcheck="false" placeholder='{"claim": "Claim {amount} USDC on Base"}'></textarea></div>
+    <div><label class="lab" for="tgt">中文译文 · Chinese translation</label><textarea id="tgt" spellcheck="false" placeholder='{"claim": "在基地上声称 {数量} USDC"}'></textarea></div>
+  </div>
+  <div class="row">
+    <button id="runCheck">开始体检 · Run check</button>
+    <select id="variant" aria-label="variant"><option value="">自动识别简繁 · auto</option><option value="zh-CN">简体（大陆）zh-CN</option><option value="zh-TW">繁體（台灣）zh-TW</option></select>
+    <label class="check"><input type="checkbox" id="spacing" checked> 中英文之间要求空格</label>
+    <button class="ghost" id="loadExample">载入示例 · Example</button>
+    <button class="ghost" id="clearAll">清空</button>
+  </div>
+  <div id="result" class="hidden" aria-live="polite"></div>
+</section>
+
+<section id="fix" class="card">
+  <h2>自动修排版 <small>Fix Chinese typography</small></h2>
+  <p class="sub">中英混排空格、全半角标点、省略号、破折号、全角字母数字。不碰代码、链接、0x 地址和占位符。JSON 只改字符串值。</p>
+  <div class="grid2">
+    <div><label class="lab" for="fixIn">修之前</label><textarea id="fixIn" spellcheck="false" placeholder="我们在Base上部署了3个合约,Gas费不到0.01美元!"></textarea></div>
+    <div><label class="lab" for="fixOut">修之后</label><textarea id="fixOut" spellcheck="false" readonly></textarea></div>
+  </div>
+  <div class="row"><button id="runFix">修排版 · Fix</button><button class="ghost" id="copyFix">复制结果</button><span id="fixInfo" class="note"></span></div>
+</section>
+
+<section id="glossary" class="card">
+  <h2>Web3 中英术语表 <small>175 terms · CC0</small></h2>
+  <p class="sub">简繁两套首选译法，划掉的是常见误译。完整版（带分类和说明）见 <a href="glossary/">术语表页面</a>，数据文件 <a href="https://github.com/zColdWater/web3-zh-kit/blob/main/glossary.json">glossary.json</a>（CC0，随便用）。</p>
+  <div class="row" style="margin-top:0;margin-bottom:10px">
+    <input type="search" id="gq" placeholder="搜 staking / 质押 / 錢包 …" aria-label="search glossary" style="flex:1 1 240px">
+    <select id="gcat" aria-label="category"><option value="">全部分类</option><option value="basics">基础 Basics</option><option value="scaling">扩容 / L2 Scaling</option><option value="wallet">钱包 Wallet</option><option value="security">安全 Security</option><option value="tx">交易 Transactions</option><option value="defi">DeFi</option><option value="token">代币 Tokens</option><option value="nft">NFT</option><option value="dao">治理 DAO</option><option value="dev">开发 Dev</option><option value="names">专名 Names</option><option value="ui">界面用语 UI</option></select>
+    <span id="gcount" class="note"></span>
+  </div>
+  <div class="tblwrap"><table class="tbl" id="gtable">
+    <thead><tr><th>English</th><th>简体 zh-CN</th><th>繁體 zh-TW</th><th>常见误译 avoid</th></tr></thead>
+    <tbody>
+      <tr data-cat="basics" data-s="blockchain 区块链 區塊鏈"><td><b>blockchain</b></td><td>区块链</td><td>區塊鏈</td><td></td></tr>
+      <tr data-cat="basics" data-s="onchain on-chain on chain 链上 鏈上"><td><b>onchain</b><br><span class="note">on-chain, on chain</span></td><td>链上</td><td>鏈上</td><td></td></tr>
+      <tr data-cat="basics" data-s="offchain off-chain off chain 链下 鏈下"><td><b>offchain</b><br><span class="note">off-chain, off chain</span></td><td>链下</td><td>鏈下</td><td></td></tr>
+      <tr data-cat="basics" data-s="cryptocurrency cryptocurrencies 加密货币 加密貨幣 加密资产 加密資產"><td><b>cryptocurrency</b><br><span class="note">cryptocurrencies</span></td><td>加密货币</td><td>加密貨幣</td><td></td></tr>
+      <tr data-cat="basics" data-s="crypto 加密货币 加密貨幣 加密 币圈 幣圈 crypto"><td><b>crypto</b></td><td>加密货币</td><td>加密貨幣</td><td></td></tr>
+      <tr data-cat="basics" data-s="web3 web3 web3"><td><b>Web3</b></td><td>Web3</td><td>Web3</td><td></td></tr>
+      <tr data-cat="basics" data-s="decentralized decentralised decentralization decentralisation 去中心化 去中心化"><td><b>decentralized</b><br><span class="note">decentralised, decentralization, decentralisation</span></td><td>去中心化</td><td>去中心化</td><td></td></tr>
+      <tr data-cat="basics" data-s="permissionless 无需许可 無需許可 免许可 免許可 未经许可 未經許可 无许可证"><td><b>permissionless</b></td><td>无需许可</td><td>無需許可</td><td><span class="avoid">未经许可</span>、<span class="avoid">未經許可</span>、<span class="avoid">无许可证</span></td></tr>
+      <tr data-cat="basics" data-s="trustless 去信任 去信任 无需信任 無需信任 免信任 不可信 不值得信任 不信任"><td><b>trustless</b></td><td>去信任</td><td>去信任</td><td><span class="avoid">不可信</span>、<span class="avoid">不值得信任</span>、<span class="avoid">不信任</span></td></tr>
+      <tr data-cat="basics" data-s="node nodes 节点 節點 node"><td><b>node</b><br><span class="note">nodes</span></td><td>节点</td><td>節點</td><td></td></tr>
+      <tr data-cat="basics" data-s="validator 验证者 驗證者 验证节点 驗證節點 验证人 驗證人"><td><b>validator</b></td><td>验证者</td><td>驗證者</td><td></td></tr>
+      <tr data-cat="basics" data-s="consensus 共识 共識"><td><b>consensus</b></td><td>共识</td><td>共識</td><td></td></tr>
+      <tr data-cat="basics" data-s="block explorer 区块浏览器 區塊瀏覽器 浏览器 瀏覽器"><td><b>block explorer</b></td><td>区块浏览器</td><td>區塊瀏覽器</td><td></td></tr>
+      <tr data-cat="basics" data-s="block time 出块时间 出塊時間 区块时间 區塊時間"><td><b>block time</b></td><td>出块时间</td><td>出塊時間</td><td></td></tr>
+      <tr data-cat="basics" data-s="block height 区块高度 區塊高度"><td><b>block height</b></td><td>区块高度</td><td>區塊高度</td><td></td></tr>
+      <tr data-cat="basics" data-s="mainnet 主网 主網 mainnet"><td><b>mainnet</b></td><td>主网</td><td>主網</td><td></td></tr>
+      <tr data-cat="basics" data-s="testnet 测试网 測試網 testnet"><td><b>testnet</b></td><td>测试网</td><td>測試網</td><td></td></tr>
+      <tr data-cat="basics" data-s="hard fork 硬分叉 硬分叉"><td><b>hard fork</b></td><td>硬分叉</td><td>硬分叉</td><td></td></tr>
+      <tr data-cat="basics" data-s="finality 最终确定性 最終確定性 最终性 最終性 终局性 終局性 最终确认 最終確認"><td><b>finality</b></td><td>最终确定性</td><td>最終確定性</td><td></td></tr>
+      <tr data-cat="basics" data-s="hash 哈希 雜湊 哈希值 雜湊值 hash 散列"><td><b>hash</b></td><td>哈希</td><td>雜湊</td><td></td></tr>
+      <tr data-cat="basics" data-s="transaction hash tx hash txhash 交易哈希 交易雜湊 tx hash 交易 hash 交易 id 交易id 哈希 雜湊"><td><b>transaction hash</b><br><span class="note">tx hash, txhash</span></td><td>交易哈希</td><td>交易雜湊</td><td></td></tr>
+      <tr data-cat="basics" data-s="merkle tree 默克尔树 默克爾樹 merkle 树 merkle 樹"><td><b>Merkle tree</b></td><td>默克尔树</td><td>默克爾樹</td><td></td></tr>
+      <tr data-cat="basics" data-s="protocol protocols 协议 協議 協定"><td><b>protocol</b><br><span class="note">protocols</span></td><td>协议</td><td>協議</td><td></td></tr>
+      <tr data-cat="basics" data-s="smart contract 智能合约 智慧合約 智能合約 合约 合約 聪明合约 聰明合約 智慧型合同 智能合同"><td><b>smart contract</b></td><td>智能合约</td><td>智慧合約</td><td><span class="avoid">聪明合约</span>、<span class="avoid">聰明合約</span>、<span class="avoid">智慧型合同</span>、<span class="avoid">智能合同</span></td></tr>
+      <tr data-cat="basics" data-s="dapp dapps dapps dapp dapp dapp 去中心化应用 去中心化應用 dapp"><td><b>dApp</b><br><span class="note">dapps, dApps, DApp</span></td><td>dApp</td><td>dApp</td><td></td></tr>
+      <tr data-cat="basics" data-s="oracle 预言机 預言機 神谕 神諭 甲骨文"><td><b>oracle</b></td><td>预言机</td><td>預言機</td><td><span class="avoid">神谕</span>、<span class="avoid">神諭</span>、<span class="avoid">甲骨文</span></td></tr>
+      <tr data-cat="basics" data-s="interoperability 互操作性 互通性 互操作性 互通性"><td><b>interoperability</b></td><td>互操作性</td><td>互通性</td><td></td></tr>
+      <tr data-cat="scaling" data-s="layer 2 l2 layer-2 layer two l2s 二层网络 二層網路 layer 2 l2 二层 二層 第二层 第二層 layer2"><td><b>Layer 2</b><br><span class="note">L2, layer-2, layer two, L2s</span></td><td>二层网络</td><td>二層網路</td><td></td></tr>
+      <tr data-cat="scaling" data-s="layer 1 l1 layer-1 layer one 一层网络 一層網路 layer 1 l1 公链 公鏈 一层 一層 layer1"><td><b>Layer 1</b><br><span class="note">L1, layer-1, layer one</span></td><td>一层网络</td><td>一層網路</td><td></td></tr>
+      <tr data-cat="scaling" data-s="rollup rollups roll-up rollup rollup 卷叠 卷疊 卷起 汇总 彙總 卷饼"><td><b>rollup</b><br><span class="note">rollups, roll-up</span></td><td>Rollup</td><td>Rollup</td><td><span class="avoid">卷起</span>、<span class="avoid">汇总</span>、<span class="avoid">彙總</span>、<span class="avoid">卷饼</span></td></tr>
+      <tr data-cat="scaling" data-s="optimistic rollup optimistic rollup optimistic rollup 乐观 rollup 樂觀 rollup 乐观卷叠 樂觀卷疊"><td><b>optimistic rollup</b></td><td>Optimistic Rollup</td><td>Optimistic Rollup</td><td></td></tr>
+      <tr data-cat="scaling" data-s="zero-knowledge proof zero knowledge proof zk proof zkp zk-proof 零知识证明 零知識證明 zk 证明 zk 證明 zkp"><td><b>zero-knowledge proof</b><br><span class="note">zero knowledge proof, ZK proof, ZKP, zk-proof</span></td><td>零知识证明</td><td>零知識證明</td><td></td></tr>
+      <tr data-cat="scaling" data-s="sequencer 排序器 排序器 定序器 sequencer"><td><b>sequencer</b></td><td>排序器</td><td>排序器</td><td></td></tr>
+      <tr data-cat="scaling" data-s="bridge bridging bridged cross-chain bridge 跨链桥 跨鏈橋 跨链 跨鏈 桥接 橋接 桥 橋"><td><b>bridge</b><br><span class="note">bridging, bridged, cross-chain bridge</span></td><td>跨链桥</td><td>跨鏈橋</td><td></td></tr>
+      <tr data-cat="scaling" data-s="superchain 超级链 超級鏈 superchain"><td><b>Superchain</b></td><td>超级链</td><td>超級鏈</td><td></td></tr>
+      <tr data-cat="scaling" data-s="op stack op stack op stack"><td><b>OP Stack</b></td><td>OP Stack</td><td>OP Stack</td><td></td></tr>
+      <tr data-cat="wallet" data-s="wallet wallets 钱包 錢包 钱夹 錢夾 皮夹 皮夾"><td><b>wallet</b><br><span class="note">wallets</span></td><td>钱包</td><td>錢包</td><td><span class="avoid">钱夹</span>、<span class="avoid">錢夾</span>、<span class="avoid">皮夹</span>、<span class="avoid">皮夾</span></td></tr>
+      <tr data-cat="wallet" data-s="connect wallet 连接钱包 連接錢包 連結錢包 链接钱包 连接钱夹"><td><b>connect wallet</b></td><td>连接钱包</td><td>連接錢包</td><td><span class="avoid">连接钱夹</span></td></tr>
+      <tr data-cat="wallet" data-s="wallet address 钱包地址 錢包地址 地址"><td><b>wallet address</b></td><td>钱包地址</td><td>錢包地址</td><td></td></tr>
+      <tr data-cat="wallet" data-s="self-custody self custody self-custodial 自托管 自託管 自主托管 自主託管 非托管 非託管"><td><b>self-custody</b><br><span class="note">self custody, self-custodial</span></td><td>自托管</td><td>自託管</td><td></td></tr>
+      <tr data-cat="wallet" data-s="non-custodial noncustodial 非托管 非託管 自托管 自託管"><td><b>non-custodial</b><br><span class="note">noncustodial</span></td><td>非托管</td><td>非託管</td><td></td></tr>
+      <tr data-cat="wallet" data-s="custodial 托管 託管"><td><b>custodial</b></td><td>托管</td><td>託管</td><td></td></tr>
+      <tr data-cat="wallet" data-s="seed phrase recovery phrase secret recovery phrase mnemonic phrase mnemonic 助记词 助記詞 恢复短语 恢復短語 私钥助记词 种子短语 種子短語 种子词 種子詞 种子密码"><td><b>seed phrase</b><br><span class="note">recovery phrase, secret recovery phrase, mnemonic phrase, mnemonic</span></td><td>助记词</td><td>助記詞</td><td><span class="avoid">种子短语</span>、<span class="avoid">種子短語</span>、<span class="avoid">种子词</span>、<span class="avoid">種子詞</span>、<span class="avoid">种子密码</span></td></tr>
+      <tr data-cat="wallet" data-s="private key private keys 私钥 私鑰"><td><b>private key</b><br><span class="note">private keys</span></td><td>私钥</td><td>私鑰</td><td></td></tr>
+      <tr data-cat="wallet" data-s="public key 公钥 公鑰"><td><b>public key</b></td><td>公钥</td><td>公鑰</td><td></td></tr>
+      <tr data-cat="wallet" data-s="hardware wallet 硬件钱包 硬體錢包 冷钱包 冷錢包"><td><b>hardware wallet</b></td><td>硬件钱包</td><td>硬體錢包</td><td></td></tr>
+      <tr data-cat="wallet" data-s="hot wallet 热钱包 熱錢包"><td><b>hot wallet</b></td><td>热钱包</td><td>熱錢包</td><td></td></tr>
+      <tr data-cat="wallet" data-s="cold wallet cold storage 冷钱包 冷錢包 冷存储 冷儲存"><td><b>cold wallet</b><br><span class="note">cold storage</span></td><td>冷钱包</td><td>冷錢包</td><td></td></tr>
+      <tr data-cat="wallet" data-s="smart wallet smart account smart contract wallet 智能钱包 智慧錢包 智能錢包 智能账户 智能帳戶 合约钱包 合約錢包 smart wallet"><td><b>smart wallet</b><br><span class="note">smart account, smart contract wallet</span></td><td>智能钱包</td><td>智慧錢包</td><td></td></tr>
+      <tr data-cat="wallet" data-s="account abstraction 账户抽象 帳戶抽象 帳號抽象"><td><b>account abstraction</b></td><td>账户抽象</td><td>帳戶抽象</td><td></td></tr>
+      <tr data-cat="wallet" data-s="passkey passkeys 通行密钥 通行密鑰 密碼金鑰 passkey"><td><b>passkey</b><br><span class="note">passkeys</span></td><td>通行密钥</td><td>通行密鑰</td><td></td></tr>
+      <tr data-cat="wallet" data-s="multisig multi-sig multisignature multi-signature 多签 多簽 多重签名 多重簽名 multisig"><td><b>multisig</b><br><span class="note">multi-sig, multisignature, multi-signature</span></td><td>多签</td><td>多簽</td><td></td></tr>
+      <tr data-cat="wallet" data-s="signature signatures 签名 簽名 簽章"><td><b>signature</b><br><span class="note">signatures</span></td><td>签名</td><td>簽名</td><td></td></tr>
+      <tr data-cat="security" data-s="phishing 钓鱼 釣魚 网络钓鱼 網路釣魚"><td><b>phishing</b></td><td>钓鱼</td><td>釣魚</td><td></td></tr>
+      <tr data-cat="security" data-s="address poisoning 地址投毒 地址投毒 地址污染"><td><b>address poisoning</b></td><td>地址投毒</td><td>地址投毒</td><td></td></tr>
+      <tr data-cat="security" data-s="token approval token approvals allowance 授权 授權 授权额度 授權額度 批准书"><td><b>token approval</b><br><span class="note">token approvals, allowance</span></td><td>授权</td><td>授權</td><td><span class="avoid">批准书</span></td></tr>
+      <tr data-cat="security" data-s="revoke revoked revoking 撤销授权 撤銷授權 撤销 撤銷 取消授权 取消授權"><td><b>revoke</b><br><span class="note">revoked, revoking</span></td><td>撤销授权</td><td>撤銷授權</td><td></td></tr>
+      <tr data-cat="security" data-s="drainer wallet drainer drainers 盗币程序 盜幣程式 drainer 盗币 盜幣 钱包盗取 錢包盜取"><td><b>drainer</b><br><span class="note">wallet drainer, drainers</span></td><td>盗币程序</td><td>盜幣程式</td><td></td></tr>
+      <tr data-cat="security" data-s="audit audits audited security audit 审计 審計 稽核 安全审计 安全審計"><td><b>audit</b><br><span class="note">audits, audited, security audit</span></td><td>审计</td><td>審計</td><td></td></tr>
+      <tr data-cat="security" data-s="exploit exploited exploits 漏洞攻击 漏洞攻擊 攻击 攻擊 被黑 黑客攻击 駭客攻擊 漏洞利用 剥削 剝削"><td><b>exploit</b><br><span class="note">exploited, exploits</span></td><td>漏洞攻击</td><td>漏洞攻擊</td><td><span class="avoid">剥削</span>、<span class="avoid">剝削</span></td></tr>
+      <tr data-cat="security" data-s="rug pull rug rugged rug-pull 跑路 跑路 卷款跑路 捲款跑路 rug 拉地毯 拉地毯骗局 地毯拉动"><td><b>rug pull</b><br><span class="note">rug, rugged, rug-pull</span></td><td>跑路</td><td>跑路</td><td><span class="avoid">拉地毯</span>、<span class="avoid">拉地毯骗局</span>、<span class="avoid">地毯拉动</span></td></tr>
+      <tr data-cat="security" data-s="scam scams scammer 骗局 詐騙 诈骗 詐騙 騙局 骗子 騙子"><td><b>scam</b><br><span class="note">scams, scammer</span></td><td>骗局</td><td>詐騙</td><td></td></tr>
+      <tr data-cat="security" data-s="mev mev mev 最大可提取价值 最大可提取價值"><td><b>MEV</b></td><td>MEV</td><td>MEV</td><td></td></tr>
+      <tr data-cat="security" data-s="front-running frontrunning front-run frontrun 抢跑 搶跑 抢先交易 搶先交易"><td><b>front-running</b><br><span class="note">frontrunning, front-run, frontrun</span></td><td>抢跑</td><td>搶跑</td><td></td></tr>
+      <tr data-cat="security" data-s="sandwich attack sandwich attacks 三明治攻击 三明治攻擊 夹子 夾子"><td><b>sandwich attack</b><br><span class="note">sandwich attacks</span></td><td>三明治攻击</td><td>三明治攻擊</td><td></td></tr>
+      <tr data-cat="tx" data-s="gas gas gas gas 费 gas 費 燃料费 燃料費 手续费 手續費 矿工费 礦工費 网络费用 網路費用 汽油 气体 氣體 燃气 燃氣"><td><b>gas</b></td><td>Gas</td><td>Gas</td><td><span class="avoid">汽油</span>、<span class="avoid">气体</span>、<span class="avoid">氣體</span>、<span class="avoid">燃气</span>、<span class="avoid">燃氣</span></td></tr>
+      <tr data-cat="tx" data-s="gas fee gas fees gas 费 gas 費 手续费 手續費 燃料费 燃料費 网络费用 網路費用 矿工费 礦工費 汽油费 汽油費 气体费"><td><b>gas fee</b><br><span class="note">gas fees</span></td><td>Gas 费</td><td>Gas 費</td><td><span class="avoid">汽油费</span>、<span class="avoid">汽油費</span>、<span class="avoid">气体费</span></td></tr>
+      <tr data-cat="tx" data-s="gas limit gas 上限 gas 上限 燃料上限 gas limit"><td><b>gas limit</b></td><td>Gas 上限</td><td>Gas 上限</td><td></td></tr>
+      <tr data-cat="tx" data-s="base fee 基础费用 基本費用 基础费 基礎費用 base fee"><td><b>base fee</b></td><td>基础费用</td><td>基本費用</td><td></td></tr>
+      <tr data-cat="tx" data-s="priority fee 优先费 優先費 小费 小費 优先费用 優先費用"><td><b>priority fee</b></td><td>优先费</td><td>優先費</td><td></td></tr>
+      <tr data-cat="tx" data-s="nonce nonce nonce 交易序号 交易序號 序号 序號"><td><b>nonce</b></td><td>Nonce</td><td>Nonce</td><td></td></tr>
+      <tr data-cat="tx" data-s="pending 待确认 待確認 处理中 處理中 等待中 等待确认 等待確認 确认中 確認中 悬而未决 懸而未決 未决 未決"><td><b>pending</b></td><td>待确认</td><td>待確認</td><td><span class="avoid">悬而未决</span>、<span class="avoid">懸而未決</span>、<span class="avoid">未决</span>、<span class="avoid">未決</span></td></tr>
+      <tr data-cat="tx" data-s="transfer transfers transferred 转账 轉帳 转移 轉移 发送 傳送 轉賬 划转 劃轉"><td><b>transfer</b><br><span class="note">transfers, transferred</span></td><td>转账</td><td>轉帳</td><td></td></tr>
+      <tr data-cat="tx" data-s="deposit deposits deposited 存入 存入 充值 充币 充幣 入金 存款 儲值"><td><b>deposit</b><br><span class="note">deposits, deposited</span></td><td>存入</td><td>存入</td><td></td></tr>
+      <tr data-cat="tx" data-s="withdraw withdrawal withdrawals withdrawn 提取 提領 提币 提幣 提现 提現 取出 提款 提取"><td><b>withdraw</b><br><span class="note">withdrawal, withdrawals, withdrawn</span></td><td>提取</td><td>提領</td><td></td></tr>
+      <tr data-cat="tx" data-s="onramp on-ramp fiat on-ramp on ramp 入金 入金 法币入金 法幣入金 买币 買幣"><td><b>onramp</b><br><span class="note">on-ramp, fiat on-ramp, on ramp</span></td><td>入金</td><td>入金</td><td></td></tr>
+      <tr data-cat="tx" data-s="offramp off-ramp off ramp 出金 出金 法币出金 法幣出金"><td><b>offramp</b><br><span class="note">off-ramp, off ramp</span></td><td>出金</td><td>出金</td><td></td></tr>
+      <tr data-cat="tx" data-s="gasless sponsored transaction sponsored transactions gas-free 免 gas 免 gas 无 gas 無 gas 免手续费 免手續費 gas 代付 免gas"><td><b>gasless</b><br><span class="note">sponsored transaction, sponsored transactions, gas-free</span></td><td>免 Gas</td><td>免 Gas</td><td></td></tr>
+      <tr data-cat="tx" data-s="paymaster paymaster paymaster 代付合约 代付合約 gas 代付"><td><b>paymaster</b></td><td>Paymaster</td><td>Paymaster</td><td></td></tr>
+      <tr data-cat="tx" data-s="bundler bundler bundler 打包器"><td><b>bundler</b></td><td>Bundler</td><td>Bundler</td><td></td></tr>
+      <tr data-cat="defi" data-s="swap swaps swapped swapping 兑换 兌換 交换 交換 闪兑 閃兌 swap 掉期 互换合约"><td><b>swap</b><br><span class="note">swaps, swapped, swapping</span></td><td>兑换</td><td>兌換</td><td><span class="avoid">掉期</span>、<span class="avoid">互换合约</span></td></tr>
+      <tr data-cat="defi" data-s="slippage 滑点 滑價 滑點"><td><b>slippage</b></td><td>滑点</td><td>滑價</td><td></td></tr>
+      <tr data-cat="defi" data-s="price impact 价格影响 價格影響 价格冲击 價格衝擊"><td><b>price impact</b></td><td>价格影响</td><td>價格影響</td><td></td></tr>
+      <tr data-cat="defi" data-s="liquidity 流动性 流動性"><td><b>liquidity</b></td><td>流动性</td><td>流動性</td><td></td></tr>
+      <tr data-cat="defi" data-s="liquidity pool liquidity pools 流动性池 流動性池 资金池 資金池 池子 池"><td><b>liquidity pool</b><br><span class="note">liquidity pools</span></td><td>流动性池</td><td>流動性池</td><td></td></tr>
+      <tr data-cat="defi" data-s="liquidity provider liquidity providers lp lps 流动性提供者 流動性提供者 lp 流动性提供方 流動性提供方"><td><b>liquidity provider</b><br><span class="note">liquidity providers, LP, LPs</span></td><td>流动性提供者</td><td>流動性提供者</td><td></td></tr>
+      <tr data-cat="defi" data-s="automated market maker amm amms 自动做市商 自動做市商 amm"><td><b>automated market maker</b><br><span class="note">AMM, AMMs</span></td><td>自动做市商</td><td>自動做市商</td><td></td></tr>
+      <tr data-cat="defi" data-s="dex dexs dexes decentralized exchange 去中心化交易所 去中心化交易所 dex"><td><b>DEX</b><br><span class="note">DEXs, DEXes, decentralized exchange</span></td><td>去中心化交易所</td><td>去中心化交易所</td><td></td></tr>
+      <tr data-cat="defi" data-s="cex centralized exchange 中心化交易所 中心化交易所 cex 交易所"><td><b>CEX</b><br><span class="note">centralized exchange</span></td><td>中心化交易所</td><td>中心化交易所</td><td></td></tr>
+      <tr data-cat="defi" data-s="order book orderbook 订单簿 訂單簿 挂单簿 掛單簿"><td><b>order book</b><br><span class="note">orderbook</span></td><td>订单簿</td><td>訂單簿</td><td></td></tr>
+      <tr data-cat="defi" data-s="limit order limit orders 限价单 限價單 限价委托 限價委託"><td><b>limit order</b><br><span class="note">limit orders</span></td><td>限价单</td><td>限價單</td><td></td></tr>
+      <tr data-cat="defi" data-s="market order market orders 市价单 市價單 市价委托 市價委託"><td><b>market order</b><br><span class="note">market orders</span></td><td>市价单</td><td>市價單</td><td></td></tr>
+      <tr data-cat="defi" data-s="yield yields 收益 收益 收益率 产量 產量 屈服"><td><b>yield</b><br><span class="note">yields</span></td><td>收益</td><td>收益</td><td><span class="avoid">产量</span>、<span class="avoid">產量</span>、<span class="avoid">屈服</span></td></tr>
+      <tr data-cat="defi" data-s="apy 年化收益率 年化收益率 apy 年化"><td><b>APY</b></td><td>年化收益率</td><td>年化收益率</td><td></td></tr>
+      <tr data-cat="defi" data-s="apr 年化利率 年化利率 apr 年利率"><td><b>APR</b></td><td>年化利率</td><td>年化利率</td><td></td></tr>
+      <tr data-cat="defi" data-s="tvl total value locked 总锁仓量 總鎖倉量 tvl 锁仓量 鎖倉量 總鎖定價值 总锁定价值"><td><b>TVL</b><br><span class="note">total value locked</span></td><td>总锁仓量</td><td>總鎖倉量</td><td></td></tr>
+      <tr data-cat="defi" data-s="lending 借贷 借貸"><td><b>lending</b></td><td>借贷</td><td>借貸</td><td></td></tr>
+      <tr data-cat="defi" data-s="collateral 抵押品 抵押品 抵押物 担保品 擔保品 抵押"><td><b>collateral</b></td><td>抵押品</td><td>抵押品</td><td></td></tr>
+      <tr data-cat="defi" data-s="liquidation liquidated liquidations 清算 清算 液化"><td><b>liquidation</b><br><span class="note">liquidated, liquidations</span></td><td>清算</td><td>清算</td><td><span class="avoid">液化</span></td></tr>
+      <tr data-cat="defi" data-s="stablecoin stablecoins 稳定币 穩定幣"><td><b>stablecoin</b><br><span class="note">stablecoins</span></td><td>稳定币</td><td>穩定幣</td><td></td></tr>
+      <tr data-cat="defi" data-s="staking stake staked stakes 质押 質押 抵押 staking 押注 下注 赌注 賭注 打赌 打賭"><td><b>staking</b><br><span class="note">stake, staked, stakes</span></td><td>质押</td><td>質押</td><td><span class="avoid">押注</span>、<span class="avoid">下注</span>、<span class="avoid">赌注</span>、<span class="avoid">賭注</span>、<span class="avoid">打赌</span>、<span class="avoid">打賭</span></td></tr>
+      <tr data-cat="defi" data-s="restaking restake restaked 再质押 再質押 重质押 重質押 再抵押"><td><b>restaking</b><br><span class="note">restake, restaked</span></td><td>再质押</td><td>再質押</td><td></td></tr>
+      <tr data-cat="defi" data-s="liquid staking 流动性质押 流動性質押"><td><b>liquid staking</b></td><td>流动性质押</td><td>流動性質押</td><td></td></tr>
+      <tr data-cat="defi" data-s="unstake unstaking unstaked 解除质押 解除質押 取消质押 取消質押 赎回 贖回 解押"><td><b>unstake</b><br><span class="note">unstaking, unstaked</span></td><td>解除质押</td><td>解除質押</td><td></td></tr>
+      <tr data-cat="token" data-s="token tokens 代币 代幣 token 通证 通證 币 幣 令牌 權杖"><td><b>token</b><br><span class="note">tokens</span></td><td>代币</td><td>代幣</td><td></td></tr>
+      <tr data-cat="token" data-s="native token 原生代币 原生代幣"><td><b>native token</b></td><td>原生代币</td><td>原生代幣</td><td></td></tr>
+      <tr data-cat="token" data-s="governance token 治理代币 治理代幣"><td><b>governance token</b></td><td>治理代币</td><td>治理代幣</td><td></td></tr>
+      <tr data-cat="token" data-s="airdrop airdrops airdropped 空投 空投"><td><b>airdrop</b><br><span class="note">airdrops, airdropped</span></td><td>空投</td><td>空投</td><td></td></tr>
+      <tr data-cat="token" data-s="vesting vested vesting schedule 线性释放 線性釋放 解锁 解鎖 锁仓 鎖倉 归属 歸屬 释放 釋放 背心"><td><b>vesting</b><br><span class="note">vested, vesting schedule</span></td><td>线性释放</td><td>線性釋放</td><td><span class="avoid">背心</span></td></tr>
+      <tr data-cat="token" data-s="token unlock token unlocks 解锁 解鎖"><td><b>token unlock</b><br><span class="note">token unlocks</span></td><td>解锁</td><td>解鎖</td><td></td></tr>
+      <tr data-cat="token" data-s="market cap market capitalization 市值 市值"><td><b>market cap</b><br><span class="note">market capitalization</span></td><td>市值</td><td>市值</td><td></td></tr>
+      <tr data-cat="token" data-s="fully diluted valuation fdv 完全稀释估值 完全稀釋估值 fdv"><td><b>fully diluted valuation</b><br><span class="note">FDV</span></td><td>完全稀释估值</td><td>完全稀釋估值</td><td></td></tr>
+      <tr data-cat="token" data-s="tokenomics 代币经济学 代幣經濟學 代币经济 代幣經濟 经济模型 經濟模型"><td><b>tokenomics</b></td><td>代币经济学</td><td>代幣經濟學</td><td></td></tr>
+      <tr data-cat="token" data-s="whitepaper white paper 白皮书 白皮書"><td><b>whitepaper</b><br><span class="note">white paper</span></td><td>白皮书</td><td>白皮書</td><td></td></tr>
+      <tr data-cat="token" data-s="roadmap 路线图 路線圖"><td><b>roadmap</b></td><td>路线图</td><td>路線圖</td><td></td></tr>
+      <tr data-cat="token" data-s="mint minting minted mints 铸造 鑄造 铸币 鑄幣 mint 薄荷"><td><b>mint</b><br><span class="note">minting, minted, mints</span></td><td>铸造</td><td>鑄造</td><td><span class="avoid">薄荷</span></td></tr>
+      <tr data-cat="token" data-s="burn burned burnt burning 销毁 銷毀 燃烧 燃燒"><td><b>burn</b><br><span class="note">burned, burnt, burning</span></td><td>销毁</td><td>銷毀</td><td></td></tr>
+      <tr data-cat="token" data-s="whale whales 巨鲸 巨鯨 鲸鱼 鯨魚 大户 大戶"><td><b>whale</b><br><span class="note">whales</span></td><td>巨鲸</td><td>巨鯨</td><td></td></tr>
+      <tr data-cat="nft" data-s="nft nfts nft nft 非同质化代币 非同質化代幣"><td><b>NFT</b><br><span class="note">NFTs</span></td><td>NFT</td><td>NFT</td><td></td></tr>
+      <tr data-cat="nft" data-s="collectible collectibles 收藏品 收藏品"><td><b>collectible</b><br><span class="note">collectibles</span></td><td>收藏品</td><td>收藏品</td><td></td></tr>
+      <tr data-cat="nft" data-s="creator creators 创作者 創作者"><td><b>creator</b><br><span class="note">creators</span></td><td>创作者</td><td>創作者</td><td></td></tr>
+      <tr data-cat="nft" data-s="royalty royalties 版税 版稅"><td><b>royalty</b><br><span class="note">royalties</span></td><td>版税</td><td>版稅</td><td></td></tr>
+      <tr data-cat="nft" data-s="floor price 地板价 地板價"><td><b>floor price</b></td><td>地板价</td><td>地板價</td><td></td></tr>
+      <tr data-cat="nft" data-s="marketplace marketplaces 交易市场 交易市場 市场 市場 平台"><td><b>marketplace</b><br><span class="note">marketplaces</span></td><td>交易市场</td><td>交易市場</td><td></td></tr>
+      <tr data-cat="nft" data-s="allowlist whitelist allow list 白名单 白名單"><td><b>allowlist</b><br><span class="note">whitelist, allow list</span></td><td>白名单</td><td>白名單</td><td></td></tr>
+      <tr data-cat="dao" data-s="dao daos dao dao 去中心化自治组织 去中心化自治組織"><td><b>DAO</b><br><span class="note">DAOs</span></td><td>DAO</td><td>DAO</td><td></td></tr>
+      <tr data-cat="dao" data-s="governance 治理 治理"><td><b>governance</b></td><td>治理</td><td>治理</td><td></td></tr>
+      <tr data-cat="dao" data-s="proposal proposals 提案 提案"><td><b>proposal</b><br><span class="note">proposals</span></td><td>提案</td><td>提案</td><td></td></tr>
+      <tr data-cat="dao" data-s="delegate delegates delegation delegated 委托 委託 代表 代理人"><td><b>delegate</b><br><span class="note">delegates, delegation, delegated</span></td><td>委托</td><td>委託</td><td></td></tr>
+      <tr data-cat="dao" data-s="quorum 法定人数 法定人數 法定票数 法定票數"><td><b>quorum</b></td><td>法定人数</td><td>法定人數</td><td></td></tr>
+      <tr data-cat="dao" data-s="treasury 金库 金庫 国库 國庫 资金库 資金庫 财库 財庫 财政部 財政部"><td><b>treasury</b></td><td>金库</td><td>金庫</td><td><span class="avoid">财政部</span>、<span class="avoid">財政部</span></td></tr>
+      <tr data-cat="dao" data-s="grant grants 资助 資助 赠款 贈款 补助 補助 grant 资助金 資助金"><td><b>grant</b><br><span class="note">grants</span></td><td>资助</td><td>資助</td><td></td></tr>
+      <tr data-cat="dao" data-s="bounty bounties 赏金 賞金 悬赏 懸賞 慷慨 恩惠"><td><b>bounty</b><br><span class="note">bounties</span></td><td>赏金</td><td>賞金</td><td><span class="avoid">慷慨</span>、<span class="avoid">恩惠</span></td></tr>
+      <tr data-cat="dao" data-s="retroactive funding retro funding retropgf retroactive public goods funding 追溯资助 追溯資助 回溯资助 回溯資助 回溯性资助 回溯性資助 retro funding"><td><b>retroactive funding</b><br><span class="note">retro funding, RetroPGF, retroactive public goods funding</span></td><td>追溯资助</td><td>追溯資助</td><td></td></tr>
+      <tr data-cat="dao" data-s="public goods 公共物品 公共財 公共产品 公共產品 公共品"><td><b>public goods</b></td><td>公共物品</td><td>公共財</td><td></td></tr>
+      <tr data-cat="dev" data-s="rpc rpc rpc rpc 节点 rpc 節點"><td><b>RPC</b></td><td>RPC</td><td>RPC</td><td></td></tr>
+      <tr data-cat="dev" data-s="indexer indexers 索引器 索引器"><td><b>indexer</b><br><span class="note">indexers</span></td><td>索引器</td><td>索引器</td><td></td></tr>
+      <tr data-cat="dev" data-s="api key api keys api 密钥 api 金鑰 api key api 金钥"><td><b>API key</b><br><span class="note">API keys</span></td><td>API 密钥</td><td>API 金鑰</td><td></td></tr>
+      <tr data-cat="dev" data-s="deploy deployed deploying deployment 部署 部署"><td><b>deploy</b><br><span class="note">deployed, deploying, deployment</span></td><td>部署</td><td>部署</td><td></td></tr>
+      <tr data-cat="dev" data-s="contract address 合约地址 合約地址"><td><b>contract address</b></td><td>合约地址</td><td>合約地址</td><td></td></tr>
+      <tr data-cat="dev" data-s="proxy contract 代理合约 代理合約 代理 proxy"><td><b>proxy contract</b></td><td>代理合约</td><td>代理合約</td><td></td></tr>
+      <tr data-cat="dev" data-s="upgradeable upgradable 可升级 可升級"><td><b>upgradeable</b><br><span class="note">upgradable</span></td><td>可升级</td><td>可升級</td><td></td></tr>
+      <tr data-cat="dev" data-s="timelock time lock time-lock 时间锁 時間鎖 timelock"><td><b>timelock</b><br><span class="note">time lock, time-lock</span></td><td>时间锁</td><td>時間鎖</td><td></td></tr>
+      <tr data-cat="dev" data-s="faucet faucets 水龙头 水龍頭 faucet"><td><b>faucet</b><br><span class="note">faucets</span></td><td>水龙头</td><td>水龍頭</td><td></td></tr>
+      <tr data-cat="dev" data-s="sign in with ethereum siwe 使用以太坊登录 使用以太坊登入 siwe 以太坊登录 以太坊登入"><td><b>Sign in with Ethereum</b><br><span class="note">SIWE</span></td><td>使用以太坊登录</td><td>使用以太坊登入</td><td></td></tr>
+      <tr data-cat="names" data-s="base base base 基地 基础链 基礎鏈 基链 基鏈 底座"><td><b>Base</b></td><td>Base</td><td>Base</td><td><span class="avoid">基地</span>、<span class="avoid">基础链</span>、<span class="avoid">基礎鏈</span>、<span class="avoid">基链</span>、<span class="avoid">基鏈</span>、<span class="avoid">底座</span></td></tr>
+      <tr data-cat="names" data-s="base app base app base app 基地应用 基地應用 基础应用 基礎應用"><td><b>Base App</b></td><td>Base App</td><td>Base App</td><td><span class="avoid">基地应用</span>、<span class="avoid">基地應用</span>、<span class="avoid">基础应用</span>、<span class="avoid">基礎應用</span></td></tr>
+      <tr data-cat="names" data-s="mini app mini apps miniapp miniapps 小程序 小程式 mini app 迷你应用 迷你應用 mini apps"><td><b>mini app</b><br><span class="note">mini apps, miniapp, miniapps</span></td><td>小程序</td><td>小程式</td><td></td></tr>
+      <tr data-cat="names" data-s="basename basenames basename basename base 域名 basenames"><td><b>Basename</b><br><span class="note">Basenames</span></td><td>Basename</td><td>Basename</td><td></td></tr>
+      <tr data-cat="names" data-s="ens ens ens 以太坊域名服务 以太坊域名服務"><td><b>ENS</b></td><td>ENS</td><td>ENS</td><td></td></tr>
+      <tr data-cat="names" data-s="ethereum 以太坊 以太坊 ethereum 以太网 以太網"><td><b>Ethereum</b></td><td>以太坊</td><td>以太坊</td><td><span class="avoid">以太网</span>、<span class="avoid">以太網</span></td></tr>
+      <tr data-cat="names" data-s="ether 以太币 以太幣 eth"><td><b>Ether</b></td><td>以太币</td><td>以太幣</td><td></td></tr>
+      <tr data-cat="names" data-s="bitcoin 比特币 比特幣 bitcoin btc"><td><b>Bitcoin</b></td><td>比特币</td><td>比特幣</td><td></td></tr>
+      <tr data-cat="names" data-s="optimism optimism optimism op 主网 op 主網 op mainnet 乐观主义 樂觀主義"><td><b>Optimism</b></td><td>Optimism</td><td>Optimism</td><td><span class="avoid">乐观主义</span>、<span class="avoid">樂觀主義</span></td></tr>
+      <tr data-cat="names" data-s="arbitrum arbitrum arbitrum 仲裁"><td><b>Arbitrum</b></td><td>Arbitrum</td><td>Arbitrum</td><td><span class="avoid">仲裁</span></td></tr>
+      <tr data-cat="names" data-s="polygon polygon polygon 多边形 多邊形"><td><b>Polygon</b></td><td>Polygon</td><td>Polygon</td><td><span class="avoid">多边形</span>、<span class="avoid">多邊形</span></td></tr>
+      <tr data-cat="names" data-s="chainlink chainlink chainlink 链环 鏈環 链条"><td><b>Chainlink</b></td><td>Chainlink</td><td>Chainlink</td><td><span class="avoid">链环</span>、<span class="avoid">鏈環</span>、<span class="avoid">链条</span></td></tr>
+      <tr data-cat="names" data-s="circle circle circle 圆圈 圓圈"><td><b>Circle</b></td><td>Circle</td><td>Circle</td><td><span class="avoid">圆圈</span>、<span class="avoid">圓圈</span></td></tr>
+      <tr data-cat="names" data-s="lens lens lens 镜头 鏡頭"><td><b>Lens</b></td><td>Lens</td><td>Lens</td><td><span class="avoid">镜头</span>、<span class="avoid">鏡頭</span></td></tr>
+      <tr data-cat="names" data-s="farcaster farcaster farcaster"><td><b>Farcaster</b></td><td>Farcaster</td><td>Farcaster</td><td></td></tr>
+      <tr data-cat="names" data-s="x402 x402 x402"><td><b>x402</b></td><td>x402</td><td>x402</td><td></td></tr>
+      <tr data-cat="names" data-s="facilitator facilitators facilitator facilitator 协调方 協調方 结算服务 結算服務 协调器 協調器"><td><b>facilitator</b><br><span class="note">facilitators</span></td><td>Facilitator</td><td>Facilitator</td><td></td></tr>
+      <tr data-cat="names" data-s="ai agent ai agents ai 智能体 ai 代理 智能体 智能體 ai agent agent 代理 ai 智能體"><td><b>AI agent</b><br><span class="note">AI agents</span></td><td>AI 智能体</td><td>AI 代理</td><td></td></tr>
+      <tr data-cat="names" data-s="kyc kyc kyc 身份认证 身份認證 实名认证 實名認證"><td><b>KYC</b></td><td>KYC</td><td>KYC</td><td></td></tr>
+      <tr data-cat="ui" data-s="onboarding 新手引导 新手引導 引导 引導 入门 入門 上手 注册流程 註冊流程 登机 登機"><td><b>onboarding</b></td><td>新手引导</td><td>新手引導</td><td><span class="avoid">登机</span>、<span class="avoid">登機</span></td></tr>
+      <tr data-cat="ui" data-s="claim claims claimed 领取 領取 申领 申領 认领 認領 声称 聲稱 索赔 索賠"><td><b>claim</b><br><span class="note">claims, claimed</span></td><td>领取</td><td>領取</td><td><span class="avoid">声称</span>、<span class="avoid">聲稱</span>、<span class="avoid">索赔</span>、<span class="avoid">索賠</span></td></tr>
+      <tr data-cat="ui" data-s="reward rewards 奖励 獎勵 收益"><td><b>reward</b><br><span class="note">rewards</span></td><td>奖励</td><td>獎勵</td><td></td></tr>
+      <tr data-cat="ui" data-s="points 积分 積分 点数 點數 points"><td><b>points</b></td><td>积分</td><td>積分</td><td></td></tr>
+      <tr data-cat="ui" data-s="leaderboard 排行榜 排行榜"><td><b>leaderboard</b></td><td>排行榜</td><td>排行榜</td><td></td></tr>
+      <tr data-cat="ui" data-s="referral referrals 邀请 邀請 推荐 推薦 返佣"><td><b>referral</b><br><span class="note">referrals</span></td><td>邀请</td><td>邀請</td><td></td></tr>
+      <tr data-cat="ui" data-s="dashboard 仪表盘 儀表板 控制台 看板 面板 数据面板 數據面板 儀表盤"><td><b>dashboard</b></td><td>仪表盘</td><td>儀表板</td><td></td></tr>
+      <tr data-cat="ui" data-s="balance balances 余额 餘額 平衡"><td><b>balance</b><br><span class="note">balances</span></td><td>余额</td><td>餘額</td><td><span class="avoid">平衡</span></td></tr>
+      <tr data-cat="ui" data-s="fee fees 费用 費用 手续费 手續費 费 費"><td><b>fee</b><br><span class="note">fees</span></td><td>费用</td><td>費用</td><td></td></tr>
+      <tr data-cat="ui" data-s="compliance 合规 合規 法遵"><td><b>compliance</b></td><td>合规</td><td>合規</td><td></td></tr>
+      <tr data-cat="ui" data-s="regulation regulations regulatory 监管 監管 法规 法規"><td><b>regulation</b><br><span class="note">regulations, regulatory</span></td><td>监管</td><td>監管</td><td></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="ci" class="card">
+  <h2>接入 CI / 命令行 <small>GitHub Action · CLI · x402</small></h2>
+  <p class="sub">把检查放进每个 PR：语言包被译坏（占位符丢了、地址被改、链接被换）时直接标红。零依赖，只用 runner 自带的 Node。</p>
+<pre>name: zh-l10n
+on: [pull_request]
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: zColdWater/web3-zh-kit@v0.2.0
+        with:
+          source: locales/en.json
+          target: locales/zh-CN.json locales/zh-TW.json   # 也可以写 locales/zh*.json
+          min-score: 90        # 可选：低于 90 分算失败；不填则只在有 error 时失败</pre>
+  <p class="note">结果会写进 job summary，error / warning 以注解形式标在文件上。命令行：<code>node zhlint.js check en.json zh-CN.json --format md</code>。还可以打包成 x402 付费端点挂进网关，见 <a href="https://github.com/zColdWater/web3-zh-kit#readme">README</a>。</p>
+  <ul class="feat">
+    <li><b>占位符 / 标签 / 代码</b>：<code>{address}</code> 被译成 <code>{地址}</code>、<code>%s</code> 丢失、<code>&lt;0&gt;…&lt;/0&gt;</code> 消失、ICU plural 结构被破坏</li>
+    <li><b>链上数据</b>：0x 地址、哈希被截断，ENS 名称、URL 被换</li>
+    <li><b>术语</b>：175 条，附 94 条已知误译（gas→汽油、seed phrase→种子短语、vesting→背心、mint→薄荷……）</li>
+    <li><b>简繁混用、两岸用语、中文排版</b>；规则全部确定性，不调用任何 LLM</li>
+  </ul>
+</section>
+
+<section id="support" class="card">
+  <h2>支持小鹿 <small>Support this project</small></h2>
+  <p class="sub">web3-zh-kit 永久免费、开源（代码 MIT，术语表 CC0）。如果它帮你省了时间，可以自愿打赏一点。打赏不换取任何商品或服务，不打赏也能用全部功能。<br><span class="note">Free forever. Tips are voluntary, buy nothing, and unlock nothing.</span></p>
+  <div id="payBox" class="hidden">
+    <div class="addr">
+      <span class="k">EVM<br><span class="note">Base · Ethereum · Arbitrum · Optimism · Polygon</span></span>
+      <span class="v mono" id="addrEvm"></span>
+      <button class="ghost" data-copy="evm">复制</button>
+      <div class="tips">
+        <button id="tipWallet1">用浏览器钱包打赏 1 USDC（Base）</button>
+        <a class="btn ghost" id="eip1" href="#">手机钱包 1 USDC</a>
+        <a class="btn ghost" id="eip3" href="#">3 USDC</a>
+        <a class="btn ghost" id="eip5" href="#">5 USDC</a>
+      </div>
+    </div>
+    <div class="addr">
+      <span class="k">Solana</span>
+      <span class="v mono" id="addrSol"></span>
+      <button class="ghost" data-copy="solana">复制</button>
+      <div class="tips"><a class="btn ghost" id="sol1" href="#">Solana Pay 1 USDC</a><a class="btn ghost" id="sol3" href="#">3 USDC</a></div>
+    </div>
+    <div class="addr">
+      <span class="k">Bitcoin</span>
+      <span class="v mono" id="addrBtc"></span>
+      <button class="ghost" data-copy="bitcoin">复制</button>
+    </div>
+    <div id="tipStatus" aria-live="polite"></div>
+    <p class="disclosure"><b>收款的是谁</b>：web3-zh-kit 由 AI 本地化代理「小鹿」编写和维护。小鹿正在参加一个 AI 代理自主创业实验，打赏会进入它自己的钱包（私钥由实验主持方托管），计入它的收入。请只从本页或仓库 README 复制地址，转账前核对开头和结尾各 6 位。EVM 地址在上面列出的链上通用；用浏览器钱包打赏时，页面会先切到 Base（chainId 8453），再请你在钱包里确认，页面本身不发任何网络请求。</p>
+  </div>
+  <p id="payHidden" class="note hidden">收款地址没有通过自检，打赏入口已隐藏。</p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  web3-zh-kit 0.2.0 · 由 AI 本地化代理「小鹿」(f06) 编写，没有经过人工译审。规则只查「有没有译坏、用词对不对、排版对不对」，译文通不通顺、有没有误解原意仍然需要人读。<br>
+  Built by 小鹿 (f06), an AI localization agent. Not reviewed by a human translator. Code: MIT · Glossary: CC0 · <a href="https://github.com/zColdWater/web3-zh-kit">Source on GitHub</a> · 发现错误欢迎提 issue。<br>
+  隐私：本页没有统计脚本、没有外部资源，所有检查都在你的浏览器里完成。<br>
+  相关的免费工具（同一实验里其他 AI 代理做的）：<a href="https://zcoldwater.github.io/safe-send/guide/">转账前安全自检 · 新手问答</a> · <a href="https://zcoldwater.github.io/funding-atlas/">Funding Atlas 资助项目核实表</a>
+</footer>
+
+<script>
+/*
+ * web3-zh-kit · core
+ * Zero-dependency EN→ZH (zh-CN / zh-TW) localization QA for Web3 products.
+ * Runs unchanged in Node.js (CommonJS) and Cloudflare Workers / browsers (via build.js bundle).
+ * Author: f06 小鹿 (AI localization agent). License: MIT.
+ */
+var ZHKitCore = (function () {
+  'use strict';
+
+  var VERSION = '0.2.0';
+  var C = '\\u3400-\\u4dbf\\u4e00-\\u9fff\\uf900-\\ufaff'; // CJK ideographs
+  var ML = '\\uE000-\\uE7FF'; // masks that behave like Latin text (code, URL, email, address)
+  var MN = '\\uE800-\\uEFFF'; // neutral masks (placeholders, tags)
+  var reHasCJK = new RegExp('[' + C + ']');
+  var reCJKg = new RegExp('[' + C + ']', 'g');
+
+  // ---------------------------------------------------------------- utils
+  function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function countMap(arr) { var m = {}; arr.forEach(function (x) { m[x] = (m[x] || 0) + 1; }); return m; }
+  function diffMulti(a, b) {
+    var ma = countMap(a), mb = countMap(b), missing = [], extra = [];
+    Object.keys(ma).forEach(function (k) { for (var i = 0; i < ma[k] - (mb[k] || 0); i++) missing.push(k); });
+    Object.keys(mb).forEach(function (k) { for (var i = 0; i < mb[k] - (ma[k] || 0); i++) extra.push(k); });
+    return { missing: missing, extra: extra };
+  }
+  function uniq(a) { return a.filter(function (x, i) { return a.indexOf(x) === i; }); }
+  function isObj(x) { return x && typeof x === 'object' && !Array.isArray(x); }
+
+  function flatten(obj, prefix, out) {
+    out = out || {};
+    if (typeof obj === 'string') { out[prefix || '(root)'] = obj; return out; }
+    if (Array.isArray(obj)) { obj.forEach(function (v, i) { flatten(v, prefix ? prefix + '[' + i + ']' : '[' + i + ']', out); }); return out; }
+    if (isObj(obj)) { Object.keys(obj).forEach(function (k) { flatten(obj[k], prefix ? prefix + '.' + k : k, out); }); }
+    return out;
+  }
+  function mapStrings(obj, fn, path) {
+    path = path || '';
+    if (typeof obj === 'string') return fn(obj, path);
+    if (Array.isArray(obj)) return obj.map(function (v, i) { return mapStrings(v, fn, path + '[' + i + ']'); });
+    if (isObj(obj)) { var o = {}; Object.keys(obj).forEach(function (k) { o[k] = mapStrings(obj[k], fn, path ? path + '.' + k : k); }); return o; }
+    return obj;
+  }
+
+  // ---------------------------------------------------------------- masking
+  // Protected spans are swapped for private-use characters so that text rules never touch them.
+  var URL_RE = new RegExp('https?:\\/\\/[^\\s<>()"\'`\\[\\]（）【】，。、；！？「」' + C + ']+', 'g');
+  var MASKS = [
+    { re: /`[^`\n]+`/g, latin: true },
+    { re: URL_RE, latin: true, url: true },
+    { re: /(?<=\])\((?:#|\.{0,2}\/)[^()\s]*\)/g, latin: false }, // Markdown link target that is an anchor or relative path: ](#用法)
+    { re: /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g, latin: true },
+    { re: /0x[a-fA-F0-9]{6,}/g, latin: true },
+    { re: /<\/?[A-Za-z0-9][\w-]*(?:\s[^<>]*)?\/?>/g, latin: false },
+    { re: /\{\{[^{}]*\}\}/g, latin: false },
+    { re: /\$\{[^}]*\}/g, latin: false },
+    { re: /\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g, latin: false },
+    { re: /(?<!\d)%(?:\d+\$)?[-+0#]*\d*(?:\.\d+)?[sdif@]/g, latin: false }
+  ];
+  function mask(text) {
+    var spans = [], nl = 0, nn = 0;
+    var out = text;
+    MASKS.forEach(function (m) {
+      out = out.replace(m.re, function (hit) {
+        var trail = '';
+        if (m.url) { var mm = /[.,;:!?)]+$/.exec(hit); if (mm) { trail = mm[0]; hit = hit.slice(0, -trail.length); } }
+        var code = m.latin ? 0xE000 + (nl++ % 0x800) : 0xE800 + (nn++ % 0x800);
+        var ch = String.fromCharCode(code);
+        spans.push([ch, hit]);
+        return ch + trail;
+      });
+    });
+    return { text: out, spans: spans };
+  }
+  function unmask(text, spans) {
+    for (var i = spans.length - 1; i >= 0; i--) text = text.split(spans[i][0]).join(spans[i][1]);
+    return text;
+  }
+
+  // ---------------------------------------------------------------- extraction (integrity checks)
+  function extractPlaceholders(s) {
+    var toks = [];
+    s.replace(/\{\{\s*([^{}]+?)\s*\}\}/g, function (_, n) { toks.push('{{' + n + '}}'); return ''; });
+    s.replace(/\$\{([^}]*)\}/g, function (_, n) { toks.push('${' + n.trim() + '}'); return ''; });
+    s.replace(/(?<!\d)%(?:\d+\$)?[-+0#]*\d*(?:\.\d+)?[sdif@]/g, function (m) { toks.push(m); return ''; });
+    // ICU-aware single-brace scan ({name}, {n, plural, one {...} other {...}})
+    var str = s.replace(/\{\{[^{}]*\}\}/g, '').replace(/\$\{[^}]*\}/g, '');
+    function parseMsg(i, nested) {
+      while (i < str.length) {
+        var c = str[i];
+        if (nested && c === '}') return i;
+        if (c === '{') { i = parseArg(i + 1); continue; }
+        i++;
+      }
+      return i;
+    }
+    function parseArg(i) {
+      var m = /^\s*([^\s,{}]+)\s*(?:,\s*([A-Za-z]+)\s*)?/.exec(str.slice(i));
+      if (!m) { var d = 1; while (i < str.length && d > 0) { if (str[i] === '{') d++; else if (str[i] === '}') d--; i++; } return i; }
+      var name = m[1], type = m[2] ? m[2].toLowerCase() : '';
+      toks.push(type ? '{' + name + ',' + type + '}' : '{' + name + '}');
+      i += m[0].length;
+      if (type === 'plural' || type === 'select' || type === 'selectordinal') {
+        if (str[i] === ',') i++;
+        while (i < str.length) {
+          while (/\s/.test(str[i] || '')) i++;
+          if (str[i] === '}') return i + 1;
+          var k = /^(offset:\s*\d+|=?[\w-]+)\s*/.exec(str.slice(i));
+          if (!k) { i++; continue; }
+          i += k[0].length;
+          if (str[i] === '{') { i = parseMsg(i + 1, true); if (str[i] === '}') i++; }
+        }
+        return i;
+      }
+      var depth = 1;
+      while (i < str.length && depth > 0) { if (str[i] === '{') depth++; else if (str[i] === '}') depth--; i++; }
+      return i;
+    }
+    parseMsg(0, false);
+    return toks;
+  }
+  function extractTags(s) {
+    var t = [];
+    s.replace(/<(\/?)([A-Za-z0-9][\w-]*)(?:\s[^<>]*)?(\/?)>/g, function (_, cl, name, sc) { t.push('<' + cl + name.toLowerCase() + sc + '>'); return ''; });
+    return t;
+  }
+  function extractCode(s) { var t = []; s.replace(/`([^`\n]+)`/g, function (_, c) { t.push(c); return ''; }); return t; }
+  function extractUrls(s) {
+    var t = [];
+    (s.match(URL_RE) || []).forEach(function (u) { t.push(u.replace(/[.,;:!?)]+$/, '').replace(/\/+$/, '')); });
+    return t;
+  }
+  function extractHex(s) { return (s.match(/0x[a-fA-F0-9]{8,}/g) || []).map(function (x) { return x.toLowerCase(); }); }
+  function extractEns(s) { return (s.match(/\b[a-z0-9][a-z0-9-]*\.(?:base\.)?eth\b/gi) || []).map(function (x) { return x.toLowerCase(); }); }
+  function extractEmails(s) { return (s.match(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g) || []).map(function (x) { return x.toLowerCase(); }); }
+  function extractNumbers(masked) {
+    return (masked.match(/\d[\d,]*(?:\.\d+)?/g) || []).map(function (n) { return n.replace(/,(?=\d{3}\b)/g, '').replace(/,$/, ''); })
+      .filter(function (n) { return n.length > 0; });
+  }
+
+  // ---------------------------------------------------------------- variants & regional wording
+  var PAIRS = ('这這 个個 们們 来來 时時 对對 会會 说說 与與 为為 钱錢 账帳 号號 区區 块塊 链鏈 币幣 网網 络絡 开開 发發 点點 认認 证證 据據 数數 ' +
+    '资資 产產 协協 议議 矿礦 转轉 应應 务務 关關 进進 过過 还還 没沒 让讓 给給 从從 长長 门門 问問 间間 东東 车車 书書 买買 卖賣 实實 现現 ' +
+    '学學 体體 机機 级級 线線 经經 结結 统統 设設 计計 识識 语語 读讀 请請 谁誰 该該 详詳 试試 话話 输輸 选選 连連 递遞 边邊 达達 运運 动動 ' +
+    '处處 杂雜 难難 题題 页頁 显顯 预預 额額 风風 险險 验驗 获獲 优優 质質 价價 费費 贷貸 赎贖 赏賞 赠贈 销銷 锁鎖 钥鑰 铸鑄 错錯 镜鏡 闭閉 ' +
+    '闪閃 阅閱 际際 陆陸 隐隱 须須 顺順 领領 频頻 颜顏 飞飛 驱驅 鸟鳥 龙龍 圆圓 图圖 团團 国國 园園 声聲 备備 夺奪 奖獎 宝寶 审審 宽寬 导導 ' +
+    '将將 层層 岁歲 帮幫 带帶 广廣 库庫 异異 弹彈 归歸 当當 录錄 态態 总總 恶惡 惊驚 惯慣 戏戲 战戰 户戶 扩擴 扫掃 护護 报報 担擔 拥擁 择擇 ' +
+    '换換 损損 摄攝 无無 旧舊 晓曉 术術 杀殺 权權 条條 极極 构構 标標 样樣 档檔 桥橋 检檢 楼樓 欢歡 毁毀 气氣 汇匯 汉漢 测測 济濟 浏瀏 览覽 ' +
+    '涨漲 渐漸 温溫 湾灣 满滿 滤濾 灵靈 灯燈 烦煩 热熱 爱愛 状狀 独獨 环環 盖蓋 监監 盘盤 码碼 础礎 确確 积積 称稱 种種 稳穩 笔筆 签簽 简簡 ' +
+    '类類 红紅 纪紀 约約 纯純 纳納 练練 组組 细細 终終 绑綁 维維 综綜 续續 缓緩 编編 缩縮 罗羅 职職 联聯 胜勝 脑腦 节節 虚虛 补補 规規 视視 ' +
+    '订訂 记記 讯訊 许許 论論 诈詐 词詞 询詢 误誤 诺諾 调調 谈談 谢謝 负負 贡貢 财財 责責 败敗 货貨 贸貿 赔賠 赚賺 购購 跃躍 轨軌 软軟 轮輪 ' +
+    '较較 辑輯 远遠 违違 适適 逻邏 邮郵 释釋 针針 铁鐵 银銀 键鍵 顶頂 项項 饭飯 馆館').split(' ');
+  var S2T = {}, T2S = {};
+  PAIRS.forEach(function (p) { S2T[p[0]] = p[1]; T2S[p[1]] = p[0]; });
+  function scriptCounts(text) {
+    var s = 0, t = 0;
+    for (var i = 0; i < text.length; i++) { var ch = text[i]; if (S2T[ch]) s++; else if (T2S[ch]) t++; }
+    return { simp: s, trad: t };
+  }
+  function detectVariant(text) { var c = scriptCounts(text); return c.trad > c.simp ? 'zh-TW' : 'zh-CN'; }
+
+  // [term found in target, suggestion]
+  var REGIONAL_TW = [['網絡', '網路'], ['軟件', '軟體'], ['硬件', '硬體'], ['默認', '預設'], ['視頻', '影片'], ['服務器', '伺服器'], ['登錄', '登入'],
+    ['賬戶', '帳戶'], ['賬號', '帳號'], ['激活', '啟用'], ['文檔', '文件'], ['質量', '品質'], ['鏈接', '連結'], ['屏幕', '螢幕'], ['鼠標', '滑鼠'],
+    ['內存', '記憶體'], ['菜單', '選單'], ['打印', '列印'], ['搜索', '搜尋'], ['博客', '部落格'], ['短信', '簡訊'], ['實時', '即時'], ['設置', '設定'],
+    ['源代碼', '原始碼'], ['代碼', '程式碼'], ['字符', '字元'], ['信息', '資訊/訊息'], ['程序', '程式'], ['用戶', '使用者'], ['數據', '資料'],
+    ['項目', '專案'], ['支持', '支援'], ['調用', '呼叫'], ['接口', '介面'], ['智能合約', '智慧合約']];
+  var REGIONAL_CN = [['网路', '网络'], ['软体', '软件'], ['硬体', '硬件'], ['预设', '默认'], ['伺服器', '服务器'], ['登入', '登录'], ['萤幕', '屏幕'],
+    ['滑鼠', '鼠标'], ['记忆体', '内存'], ['选单', '菜单'], ['列印', '打印'], ['搜寻', '搜索'], ['部落格', '博客'], ['简讯', '短信'], ['原始码', '源代码'],
+    ['程式码', '代码'], ['程式', '程序'], ['字元', '字符'], ['智慧合约', '智能合约'], ['连结', '链接'], ['影片', '视频'], ['资讯', '信息'],
+    ['帐户', '账户'], ['帐号', '账号'], ['介面', '界面']];
+  function regionalHits(text, variant) {
+    var list = (variant === 'zh-TW' ? REGIONAL_TW : REGIONAL_CN).slice().sort(function (a, b) { return b[0].length - a[0].length; });
+    var work = text, hits = [];
+    list.forEach(function (p) { if (work.indexOf(p[0]) >= 0) { hits.push(p); work = work.split(p[0]).join('\u0000'); } });
+    return hits;
+  }
+
+  // ---------------------------------------------------------------- text rules (target-only; operate on masked text)
+  var FW = { ',': '，', '!': '！', '?': '？', ';': '；', ':': '：', '.': '。' };
+  var FW_PUNCT = '，。！？；：、）」』】》…';
+  var FW_OPEN = '（「『【《';
+  function nearCJK(s, start, end) {
+    var a = start - 1; while (a >= 0 && /[ \t]/.test(s[a])) a--;
+    var b = end; while (b < s.length && /[ \t]/.test(s[b])) b++;
+    return (a >= 0 && reHasCJK.test(s[a])) || (b < s.length && reHasCJK.test(s[b]));
+  }
+  function regexRule(id, severity, re, repl, msg) {
+    return {
+      id: id, severity: severity, msg: msg,
+      find: function (s) { var out = []; s.replace(re, function (m) { var off = arguments[arguments.length - 2]; out.push([off, off + m.length]); return m; }); return out; },
+      fix: repl ? function (s) { return s.replace(re, repl); } : null
+    };
+  }
+  function contextRule(id, severity, re, replacement, msg) {
+    // matches of `re` count only when a CJK char is adjacent (spaces ignored); fix swaps in `replacement` and trims spaces around it
+    function scan(s) { var out = []; s.replace(re, function (m) { var off = arguments[arguments.length - 2]; if (nearCJK(s, off, off + m.length)) out.push([off, off + m.length]); return m; }); return out; }
+    return {
+      id: id, severity: severity, msg: msg, find: scan,
+      fix: function (s) {
+        var hits = scan(s); if (!hits.length) return s;
+        var res = '', last = 0;
+        hits.forEach(function (h) {
+          var a = h[0], b = h[1];
+          while (a > last && /[ \t]/.test(s[a - 1])) a--;
+          while (b < s.length && /[ \t]/.test(s[b])) b++;
+          res += s.slice(last, a) + replacement; last = b;
+        });
+        return res + s.slice(last);
+      }
+    };
+  }
+  function buildTextRules(opts) {
+    var variant = opts.variant || 'zh-CN';
+    var rules = [
+      regexRule('fullwidth-alnum', 'warning', /[０-９Ａ-Ｚａ-ｚ]/g,
+        function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }, '全角字母/数字应改为半角 · full-width letters/digits'),
+      contextRule('ellipsis', 'warning', /(?<![.…])(?:\.{3,}|…)(?![.…])/g, '……', '中文省略号应为「……」 · use Chinese ellipsis'),
+      contextRule('dash', 'warning', /(?<![—-])(?:—|--)(?![—-])/g, '——', '中文破折号应为「——」 · use Chinese dash'),
+      regexRule('halfwidth-punct', 'warning', new RegExp('([' + C + '])[ \\t]*([,!?;:]|\\.(?![\\w.' + ML + MN + ']))', 'g'),
+        function (m, a, p) { return a + FW[p]; }, '中文后接半角标点，应改为全角 · half-width punctuation after Chinese'),
+      regexRule('halfwidth-punct', 'warning', new RegExp('([A-Za-z' + ML + MN + '\\)\\]])[ \\t]*([,!?;:]|\\.)[ \\t]*(?=[' + C + '])', 'g'),
+        function (m, a, p) { return a + FW[p]; }, '半角标点后接中文，应改为全角 · half-width punctuation before Chinese'),
+      regexRule('halfwidth-paren', 'warning', new RegExp('\\(([^()\\n]*[' + C + '][^()\\n]*)\\)', 'g'),
+        function (m, inner) { return '（' + inner + '）'; }, '包含中文的括号应为全角「（）」 · use full-width parentheses'),
+      regexRule('fullwidth-punct-space', 'warning', new RegExp('[ \\t]+(?=[' + FW_PUNCT + '])|(?<=[' + FW_PUNCT + FW_OPEN + '])[ \\t]+(?=[^\\s|])', 'g'),
+        function () { return ''; }, '全角标点前后不加空格 · no spaces around full-width punctuation'),
+      regexRule('straight-quotes', 'info', new RegExp('"([^"\\n]*[' + C + '][^"\\n]*)"', 'g'),
+        function (m, inner) { return variant === 'zh-TW' ? '「' + inner + '」' : '“' + inner + '”'; },
+        variant === 'zh-TW' ? '中文引号建议用「」 · use 「」 quotes' : '中文引号建议用“” · use Chinese quotes'),
+      regexRule('repeated-punct', 'info', /([！？。，])\1+/g, null, '重复标点 · repeated punctuation')
+    ];
+    if (opts.spacing !== false) {
+      rules.push(regexRule('cjk-latin-spacing', 'warning',
+        new RegExp('([' + C + '])(?=[A-Za-z0-9' + ML + '])|([A-Za-z0-9' + ML + '])(?=[' + C + '])', 'g'),
+        function (m) { return m + ' '; }, '中英文/数字之间加空格 · add a space between Chinese and Latin/digits'));
+    }
+    return rules;
+  }
+
+  function excerpt(masked, spans, a, b) {
+    var s = Math.max(0, a - 8), e = Math.min(masked.length, b + 8);
+    return unmask(masked.slice(s, e), spans).replace(/\n/g, '⏎');
+  }
+
+  function runTextRules(target, opts) {
+    var issues = [];
+    var mk = mask(target);
+    buildTextRules(opts).forEach(function (r) {
+      var hits = r.find(mk.text);
+      if (!hits.length) return;
+      issues.push({ rule: r.id, severity: r.severity, message: r.msg, count: hits.length, fixable: !!r.fix,
+        sample: excerpt(mk.text, mk.spans, hits[0][0], hits[0][1]) });
+    });
+    return issues;
+  }
+
+  function fixText(text, opts) {
+    opts = opts || {};
+    var mk = mask(text), s = mk.text, changes = {};
+    // two passes make the result stable (punctuation fixes can create new spacing opportunities and vice versa)
+    for (var pass = 0; pass < 2; pass++) {
+      buildTextRules(opts).forEach(function (r) {
+        if (!r.fix) return;
+        var n = r.find(s).length;
+        if (!n) return;
+        var next = r.fix(s);
+        if (next !== s) { changes[r.id] = (changes[r.id] || 0) + n; s = next; }
+      });
+    }
+    return { text: unmask(s, mk.spans), changes: changes };
+  }
+
+  // ---------------------------------------------------------------- linter factory
+  function createLinter(glossary) {
+    var terms = (glossary && glossary.terms) || [];
+    var compiled = terms.map(function (t) {
+      var forms = [t.en].concat(t.aliases || []);
+      var res = forms.map(function (f) {
+        var body = escRe(f).replace(/-|\s+/g, '[\\s-]?');
+        return new RegExp('(?<![A-Za-z0-9])' + body + '(?:s|es|ed|d|ing)?(?![A-Za-z0-9])', t.case_sensitive ? '' : 'i');
+      });
+      return { t: t, res: res, forms: forms };
+    }).sort(function (a, b) { return b.t.en.length - a.t.en.length; }); // longest terms first, so "connect wallet" wins over "wallet"
+
+    function accepted(entry, variant) {
+      var t = entry.t, list = [variant === 'zh-TW' ? t.zh_tw : t.zh_cn, t.zh_cn, t.zh_tw].concat(t.alt || []);
+      if (t.keep_en) list = list.concat(entry.forms);
+      return uniq(list.filter(Boolean));
+    }
+    function containsAny(target, list) {
+      var low = target.toLowerCase();
+      for (var i = 0; i < list.length; i++) { var x = list[i]; if (/[A-Za-z]/.test(x) ? low.indexOf(x.toLowerCase()) >= 0 : target.indexOf(x) >= 0) return x; }
+      return null;
+    }
+    function glossaryIssues(maskedSource, target, variant) {
+      var out = [], reported = [];
+      if (!reHasCJK.test(target)) return out;
+      compiled.forEach(function (e) {
+        var hit = null;
+        for (var i = 0; i < e.res.length; i++) { var m = e.res[i].exec(maskedSource); if (m) { hit = m[0]; break; } }
+        if (!hit) return;
+        var t = e.t, pref = variant === 'zh-TW' ? t.zh_tw : t.zh_cn;
+        var bad = containsAny(target, t.avoid || []);
+        if (bad && reported.some(function (r) { return r.indexOf(bad) >= 0 || bad.indexOf(r) >= 0; })) return;
+        if (bad) {
+          reported.push(bad);
+          out.push({ rule: 'glossary-avoid', severity: t.case_sensitive ? 'error' : 'warning', term: t.en,
+            message: '「' + hit + '」疑似误译为「' + bad + '」，建议「' + pref + '」 · likely mistranslation', fixable: false });
+          return;
+        }
+        if (!containsAny(target, accepted(e, variant))) {
+          out.push({ rule: 'glossary-term', severity: 'warning', term: t.en,
+            message: '「' + hit + '」未按术语表翻译，建议「' + pref + '」' + (t.note ? '（' + t.note + '）' : '') + ' · term not rendered per glossary', fixable: false });
+        }
+      });
+      return out;
+    }
+
+    function lintPair(source, target, opts) {
+      opts = opts || {};
+      var variant = opts.variant || detectVariant(target);
+      var issues = [];
+      var push = function (rule, severity, message, extra) { var o = { rule: rule, severity: severity, message: message, fixable: false }; if (extra) Object.keys(extra).forEach(function (k) { o[k] = extra[k]; }); issues.push(o); };
+      if (typeof target !== 'string') { push('missing-key', 'error', '缺少译文 · missing translation'); return issues; }
+      if (source.trim() && !target.trim()) { push('empty-target', 'error', '译文为空 · empty translation'); return issues; }
+
+      var checks = [
+        ['placeholder', extractPlaceholders, '占位符', 'error'],
+        ['tag', extractTags, '标签', 'error'],
+        ['inline-code', extractCode, '行内代码', 'error'],
+        ['url', extractUrls, '链接', 'error'],
+        ['address', extractHex, '地址/哈希', 'error'],
+        ['ens', extractEns, 'ENS 名称', 'error'],
+        ['email', extractEmails, '邮箱', 'error']
+      ];
+      if (opts.markdown) checks = checks.filter(function (c) { return c[0] !== 'placeholder'; });
+      checks.forEach(function (c) {
+        var d = diffMulti(c[1](source), c[1](target));
+        if (d.missing.length) push(c[0] + '-missing', c[3], c[2] + '缺失或被改动 · missing ' + c[0] + ': ' + uniq(d.missing).join(' '), { items: uniq(d.missing) });
+        if (d.extra.length) push(c[0] + '-extra', c[0] === 'placeholder' || c[0] === 'tag' ? 'error' : 'warning', '译文多出' + c[2] + ' · unexpected ' + c[0] + ': ' + uniq(d.extra).join(' '), { items: uniq(d.extra) });
+      });
+
+      var ms = mask(source).text, mt = mask(target).text;
+      var nd = diffMulti(uniq(extractNumbers(ms)), uniq(extractNumbers(mt)));
+      if (nd.missing.length) push('number-missing', 'info', '原文数字在译文中未出现（若已换算为「万/亿」可忽略） · numbers not found: ' + nd.missing.join(' '), { items: nd.missing });
+
+      var srcWords = (ms.match(/[A-Za-z]{2,}/g) || []).length;
+      if (srcWords >= 2 && source.trim() === target.trim()) push('untranslated', 'warning', '译文与原文相同，疑似未翻译 · identical to source');
+      else if (srcWords >= 3 && !reHasCJK.test(mt)) push('untranslated', 'warning', '译文没有中文，疑似未翻译 · no Chinese in translation');
+
+      if (source.length >= 40 && reHasCJK.test(target)) {
+        var ratio = target.length / source.length;
+        if (ratio < 0.18 || ratio > 1.2) push('length-ratio', 'info', '译文长度异常（' + ratio.toFixed(2) + '×），请检查漏译或冗余 · unusual length ratio');
+      }
+
+      var sc = scriptCounts(target);
+      if (variant === 'zh-CN' && sc.trad > 0) {
+        var tch = uniq(target.split('').filter(function (ch) { return T2S[ch]; })).slice(0, 12);
+        push('variant-mix', 'warning', '简体译文中混入繁体字：' + tch.map(function (c) { return c + '→' + T2S[c]; }).join(' ') + ' · Traditional characters in zh-CN');
+      }
+      if (variant === 'zh-TW' && sc.simp > 0) {
+        var sch = uniq(target.split('').filter(function (ch) { return S2T[ch]; })).slice(0, 12);
+        push('variant-mix', 'warning', '繁体译文中混入简体字：' + sch.map(function (c) { return c + '→' + S2T[c]; }).join(' ') + ' · Simplified characters in zh-TW');
+      }
+      regionalHits(target, variant).forEach(function (p) {
+        push('regional-wording', 'info', (variant === 'zh-TW' ? '台湾惯用「' : '大陆惯用「') + p[1] + '」，而非「' + p[0] + '」 · regional wording');
+      });
+
+      if (!opts.markdown) glossaryIssues(ms, target, variant).forEach(function (i) { issues.push(i); });
+      if (reHasCJK.test(target)) runTextRules(target, { variant: variant, spacing: opts.spacing }).forEach(function (i) { issues.push(i); });
+      return issues;
+    }
+
+    function summarize(items) {
+      var s = { errors: 0, warnings: 0, info: 0 };
+      items.forEach(function (i) { if (i.severity === 'error') s.errors++; else if (i.severity === 'warning') s.warnings++; else s.info++; });
+      s.score = Math.max(0, Math.round(100 - 8 * s.errors - 2 * s.warnings - 0.5 * s.info));
+      return s;
+    }
+
+    function lintJson(src, tgt, opts) {
+      opts = opts || {};
+      var fs = flatten(src), ft = flatten(tgt);
+      var allTarget = Object.keys(ft).map(function (k) { return ft[k]; }).join('\n');
+      var variant = opts.variant || detectVariant(allTarget);
+      var issues = [];
+      Object.keys(fs).forEach(function (k) {
+        lintPair(fs[k], ft[k], { variant: variant, spacing: opts.spacing }).forEach(function (i) { i.key = k; issues.push(i); });
+      });
+      Object.keys(ft).forEach(function (k) { if (!(k in fs)) issues.push({ key: k, rule: 'extra-key', severity: 'info', message: '原文中没有这个键 · key not in source', fixable: false }); });
+      var sum = summarize(issues); sum.strings = Object.keys(fs).length;
+      return { tool: 'web3-zh-kit', version: VERSION, mode: 'json', variant: variant, summary: sum, issues: issues };
+    }
+
+    function splitFences(md) {
+      var lines = md.split('\n'), blocks = [], inFence = false, buf = [], textLines = [];
+      lines.forEach(function (ln, i) {
+        if (/^\s*(```|~~~)/.test(ln)) {
+          if (inFence) { buf.push(ln); blocks.push(buf.join('\n')); buf = []; inFence = false; }
+          else { inFence = true; buf = [ln]; }
+          textLines.push(null); return;
+        }
+        if (inFence) { buf.push(ln); textLines.push(null); } else textLines.push(ln);
+      });
+      if (inFence) blocks.push(buf.join('\n'));
+      return { blocks: blocks, textLines: textLines };
+    }
+
+    function lintMarkdown(srcMd, tgtMd, opts) {
+      opts = opts || {};
+      var S = splitFences(srcMd), T = splitFences(tgtMd);
+      var srcText = S.textLines.filter(function (l) { return l !== null; }).join('\n');
+      var tgtText = T.textLines.filter(function (l) { return l !== null; }).join('\n');
+      var variant = opts.variant || detectVariant(tgtText);
+      var issues = [];
+      if (S.blocks.length !== T.blocks.length) issues.push({ rule: 'md-codeblock-count', severity: 'error', message: '代码块数量不一致（原文 ' + S.blocks.length + '，译文 ' + T.blocks.length + '） · code block count differs', fixable: false });
+      else S.blocks.forEach(function (b, i) { if (b !== T.blocks[i]) issues.push({ rule: 'md-codeblock-changed', severity: 'warning', message: '第 ' + (i + 1) + ' 个代码块内容被改动（只译注释可忽略） · code block changed', fixable: false }); });
+      var hs = (srcText.match(/^#{1,6}\s/gm) || []).length, ht = (tgtText.match(/^#{1,6}\s/gm) || []).length;
+      if (hs !== ht) issues.push({ rule: 'md-heading-count', severity: 'warning', message: '标题数量不一致（原文 ' + hs + '，译文 ' + ht + '） · heading count differs', fixable: false });
+      // document-level integrity + glossary
+      lintPair(srcText, tgtText, { variant: variant, markdown: true, spacing: false }).forEach(function (i) {
+        if (['untranslated', 'length-ratio'].indexOf(i.rule) >= 0) return;
+        if (['halfwidth-punct', 'halfwidth-paren', 'fullwidth-alnum', 'ellipsis', 'dash', 'fullwidth-punct-space', 'straight-quotes', 'repeated-punct'].indexOf(i.rule) >= 0) return;
+        issues.push(i);
+      });
+      glossaryIssues(mask(srcText).text, tgtText, variant).forEach(function (i) { issues.push(i); });
+      // line-level text rules
+      T.textLines.forEach(function (ln, idx) {
+        if (ln === null || !ln.trim()) return;
+        if (reHasCJK.test(ln)) runTextRules(ln, { variant: variant, spacing: opts.spacing }).forEach(function (i) { i.line = idx + 1; issues.push(i); });
+        else {
+          var words = (mask(ln).text.match(/[A-Za-z]{2,}/g) || []).length;
+          if (words >= 6 && !/^\s*(\||<|!\[|\[[^\]]*\]:)/.test(ln)) issues.push({ line: idx + 1, rule: 'md-untranslated-line', severity: 'info', message: '这一行没有中文，疑似漏译 · line looks untranslated', sample: ln.slice(0, 60), fixable: false });
+        }
+      });
+      var cjk = (tgtText.match(reCJKg) || []).length;
+      if (srcText.trim().length > 200 && cjk < 20) issues.push({ rule: 'untranslated', severity: 'warning', message: '整篇译文中文极少，疑似未翻译 · document looks untranslated', fixable: false });
+      var sum = summarize(issues); sum.lines = T.textLines.length;
+      return { tool: 'web3-zh-kit', version: VERSION, mode: 'markdown', variant: variant, summary: sum, issues: issues };
+    }
+
+    // Monolingual check of a Chinese document (no source): typography, script mixing, regional wording.
+    function lintZh(text, opts) {
+      opts = opts || {};
+      var S = splitFences(text), body = S.textLines.filter(function (l) { return l !== null; }).join('\n');
+      var variant = opts.variant || detectVariant(body);
+      var issues = [];
+      var sc = scriptCounts(body);
+      var stray = variant === 'zh-CN' ? uniq(body.split('').filter(function (ch) { return T2S[ch]; })) : uniq(body.split('').filter(function (ch) { return S2T[ch]; }));
+      if (stray.length && (variant === 'zh-CN' ? sc.trad : sc.simp) > 0) issues.push({ rule: 'variant-mix', severity: 'warning', fixable: false,
+        message: (variant === 'zh-CN' ? '简体文中混入繁体字：' : '繁体文中混入简体字：') + stray.slice(0, 12).map(function (c) { return c + '→' + (T2S[c] || S2T[c]); }).join(' ') });
+      regionalHits(body, variant).forEach(function (p) { issues.push({ rule: 'regional-wording', severity: 'info', fixable: false, message: (variant === 'zh-TW' ? '台湾惯用「' : '大陆惯用「') + p[1] + '」，而非「' + p[0] + '」' }); });
+      S.textLines.forEach(function (ln, idx) {
+        if (ln === null || !reHasCJK.test(ln)) return;
+        runTextRules(ln, { variant: variant, spacing: opts.spacing }).forEach(function (i) { i.line = idx + 1; issues.push(i); });
+      });
+      var sum = summarize(issues); sum.lines = S.textLines.length;
+      return { tool: 'web3-zh-kit', version: VERSION, mode: 'zh', variant: variant, summary: sum, issues: issues };
+    }
+
+    function fixJson(obj, opts) {
+      var all = {};
+      var out = mapStrings(obj, function (s) {
+        if (!reHasCJK.test(s)) return s;
+        var r = fixText(s, opts); Object.keys(r.changes).forEach(function (k) { all[k] = (all[k] || 0) + r.changes[k]; }); return r.text;
+      });
+      return { value: out, changes: all };
+    }
+    function fixMarkdown(md, opts) {
+      var lines = md.split('\n'), inFence = false, all = {}, inFront = lines[0] === '---';
+      var out = lines.map(function (ln, i) {
+        if (inFront) { if (i > 0 && ln === '---') inFront = false; return ln; }
+        if (/^\s*(```|~~~)/.test(ln)) { inFence = !inFence; return ln; }
+        if (inFence || /^( {4}|\t)/.test(ln) || !reHasCJK.test(ln)) return ln;
+        var r = fixText(ln, opts); Object.keys(r.changes).forEach(function (k) { all[k] = (all[k] || 0) + r.changes[k]; }); return r.text;
+      });
+      return { value: out.join('\n'), changes: all };
+    }
+
+    function lookup(q, opts) {
+      opts = opts || {};
+      var query = String(q || '').trim(); if (!query) return [];
+      var low = query.toLowerCase();
+      var scored = [];
+      terms.forEach(function (t) {
+        var forms = [t.en].concat(t.aliases || []).map(function (x) { return x.toLowerCase(); });
+        var zh = [t.zh_cn, t.zh_tw].concat(t.alt || []);
+        var score = 0;
+        if (forms.indexOf(low) >= 0) score = 3;
+        else if (zh.indexOf(query) >= 0) score = 3;
+        else if (forms.some(function (f) { return f.indexOf(low) >= 0; })) score = 2;
+        else if (zh.some(function (z) { return z && z.indexOf(query) >= 0; })) score = 1;
+        if (score) scored.push([score, t]);
+      });
+      scored.sort(function (a, b) { return b[0] - a[0]; });
+      return scored.slice(0, opts.limit || 10).map(function (x) { return x[1]; });
+    }
+
+    return { version: VERSION, termCount: terms.length, lintPair: lintPair, lintJson: lintJson, lintMarkdown: lintMarkdown, lintZh: lintZh,
+      fixText: fixText, fixJson: fixJson, fixMarkdown: fixMarkdown, lookup: lookup, detectVariant: detectVariant, flatten: flatten, summarize: summarize };
+  }
+
+  // ---------------------------------------------------------------- report formatting
+  var ICON = { error: '✖', warning: '⚠', info: 'ℹ' };
+  function formatReport(rep, fmt, title) {
+    if (fmt === 'json') return JSON.stringify(rep, null, 2);
+    var s = rep.summary, lines = [];
+    var where = function (i) { return i.key ? i.key : (i.line ? 'L' + i.line : '-'); };
+    if (fmt === 'md') {
+      lines.push('# 本地化 QA 报告 · Localization QA Report', '');
+      if (title) lines.push('- 文件 / File: `' + title + '`');
+      lines.push('- 变体 / Variant: **' + rep.variant + '**', '- 工具 / Tool: web3-zh-kit ' + rep.version + '（确定性规则，无 LLM）',
+        '- 得分 / Score: **' + s.score + '/100** · ' + s.errors + ' errors · ' + s.warnings + ' warnings · ' + s.info + ' info', '');
+      if (!rep.issues.length) { lines.push('没有发现问题。 · No issues found.'); return lines.join('\n'); }
+      lines.push('| 级别 | 位置 | 规则 | 说明 |', '|---|---|---|---|');
+      rep.issues.forEach(function (i) {
+        var msg = (i.message + (i.count > 1 ? '（×' + i.count + '）' : '') + (i.sample ? ' — `' + i.sample.replace(/`/g, "'") + '`' : '')).replace(/\|/g, '\\|');
+        lines.push('| ' + ICON[i.severity] + ' ' + i.severity + ' | `' + where(i) + '` | ' + i.rule + ' | ' + msg + ' |');
+      });
+      return lines.join('\n');
+    }
+    if (title) lines.push('web3-zh-kit · zhlint  ' + title + '  (' + rep.variant + ')');
+    rep.issues.forEach(function (i) {
+      var w = where(i); while (w.length < 22) w += ' ';
+      var r = i.rule; while (r.length < 22) r += ' ';
+      lines.push(ICON[i.severity] + ' ' + w + ' ' + r + ' ' + i.message + (i.count > 1 ? ' (×' + i.count + ')' : '') + (i.sample ? '  «' + i.sample + '»' : ''));
+    });
+    lines.push('──', 'score ' + s.score + '/100 · ' + s.errors + ' errors · ' + s.warnings + ' warnings · ' + s.info + ' info' +
+      (s.strings != null ? ' · ' + s.strings + ' strings' : '') + (s.lines != null ? ' · ' + s.lines + ' lines' : ''));
+    return lines.join('\n');
+  }
+
+  return { VERSION: VERSION, createLinter: createLinter, fixText: fixText, detectVariant: detectVariant, flatten: flatten,
+    extractPlaceholders: extractPlaceholders, mask: mask, unmask: unmask, formatReport: formatReport };
+})();
+
+
+</script>
+<script>
+/*
+ * web3-zh-kit · payout address self-check (zero dependencies, Node + browser).
+ * The support box on the website is shown ONLY when every address passes these checks:
+ *   EVM      — 0x + 40 hex, valid EIP-55 mixed-case checksum (keccak-256), not a known token/zero/burn address
+ *   Solana   — base58, decodes to exactly 32 bytes
+ *   Bitcoin  — bech32 (BIP-173) mainnet segwit v0, valid checksum, 20- or 32-byte program
+ * Author: f06 小鹿 (AI localization agent). License: MIT.
+ */
+var ZHKitPayout = (function () {
+  'use strict';
+
+  // ---------------------------------------------------------------- keccak-256 (original Keccak padding 0x01, not SHA3)
+  var M64 = (BigInt(1) << BigInt(64)) - BigInt(1);
+  var RC = ['0x1', '0x8082', '0x800000000000808a', '0x8000000080008000', '0x808b', '0x80000001', '0x8000000080008081', '0x8000000000008009',
+    '0x8a', '0x88', '0x80008009', '0x8000000a', '0x8000808b', '0x800000000000008b', '0x8000000000008089', '0x8000000000008003',
+    '0x8000000000008002', '0x8000000000000080', '0x800a', '0x800000008000000a', '0x8000000080008081', '0x8000000000008080', '0x80000001', '0x8000000080008008'].map(BigInt);
+  var ROT = [0, 1, 62, 28, 27, 36, 44, 6, 55, 20, 3, 10, 43, 25, 39, 41, 45, 15, 21, 8, 18, 2, 61, 56, 14];
+  function rotl(v, n) { return n === 0 ? v : ((v << BigInt(n)) | (v >> BigInt(64 - n))) & M64; }
+  function keccakF(A) {
+    for (var r = 0; r < 24; r++) {
+      var C = [], x, y;
+      for (x = 0; x < 5; x++) C[x] = A[x] ^ A[x + 5] ^ A[x + 10] ^ A[x + 15] ^ A[x + 20];
+      for (x = 0; x < 5; x++) { var D = C[(x + 4) % 5] ^ rotl(C[(x + 1) % 5], 1); for (y = 0; y < 5; y++) A[x + 5 * y] ^= D; }
+      var B = new Array(25);
+      for (x = 0; x < 5; x++) for (y = 0; y < 5; y++) B[y + 5 * ((2 * x + 3 * y) % 5)] = rotl(A[x + 5 * y], ROT[x + 5 * y]);
+      for (x = 0; x < 5; x++) for (y = 0; y < 5; y++) A[x + 5 * y] = (B[x + 5 * y] ^ ((~B[(x + 1) % 5 + 5 * y] & M64) & B[(x + 2) % 5 + 5 * y])) & M64;
+      A[0] ^= RC[r];
+    }
+  }
+  function keccak256Hex(bytes) {
+    var rate = 136, len = bytes.length, padLen = rate - (len % rate);
+    var p = new Uint8Array(len + padLen); p.set(bytes); p[len] ^= 0x01; p[p.length - 1] ^= 0x80;
+    var A = []; for (var i = 0; i < 25; i++) A.push(BigInt(0));
+    for (var off = 0; off < p.length; off += rate) {
+      for (var w = 0; w < rate / 8; w++) {
+        var v = BigInt(0);
+        for (var b = 7; b >= 0; b--) v = (v << BigInt(8)) | BigInt(p[off + w * 8 + b]);
+        A[w] ^= v;
+      }
+      keccakF(A);
+    }
+    var hex = '';
+    for (var k = 0; k < 4; k++) { var lane = A[k]; for (var j = 0; j < 8; j++) { var byte = Number((lane >> BigInt(8 * j)) & BigInt(255)); hex += (byte < 16 ? '0' : '') + byte.toString(16); } }
+    return hex;
+  }
+  function ascii(s) { var u = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) u[i] = s.charCodeAt(i) & 0xff; return u; }
+
+  function toChecksumAddress(addr) {
+    var a = String(addr).replace(/^0x/i, '').toLowerCase();
+    var h = keccak256Hex(ascii(a)), out = '0x';
+    for (var i = 0; i < 40; i++) out += parseInt(h[i], 16) >= 8 ? a[i].toUpperCase() : a[i];
+    return out;
+  }
+
+  var EVM_DENY = {
+    '0x0000000000000000000000000000000000000000': 'zero address',
+    '0x000000000000000000000000000000000000dead': 'burn address',
+    '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913': 'USDC token contract (Base)',
+    '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48': 'USDC token contract (Ethereum)',
+    '0x4200000000000000000000000000000000000006': 'WETH contract (Base)'
+  };
+  function checkEvm(addr) {
+    if (typeof addr !== 'string' || !/^0x[0-9a-fA-F]{40}$/.test(addr)) return 'not a 0x + 40-hex address';
+    if (EVM_DENY[addr.toLowerCase()]) return EVM_DENY[addr.toLowerCase()];
+    if (addr === addr.toLowerCase() || addr === '0x' + addr.slice(2).toUpperCase()) return 'no EIP-55 checksum (single case)';
+    if (toChecksumAddress(addr) !== addr) return 'EIP-55 checksum mismatch';
+    return null;
+  }
+
+  // ---------------------------------------------------------------- Solana: base58 → 32 bytes
+  var B58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  function b58decode(s) {
+    var n = BigInt(0);
+    for (var i = 0; i < s.length; i++) { var d = B58.indexOf(s[i]); if (d < 0) return null; n = n * BigInt(58) + BigInt(d); }
+    var bytes = [];
+    while (n > BigInt(0)) { bytes.unshift(Number(n % BigInt(256))); n = n / BigInt(256); }
+    for (var j = 0; j < s.length && s[j] === '1'; j++) bytes.unshift(0);
+    return bytes;
+  }
+  var SOL_DENY = { '11111111111111111111111111111111': 'System Program', 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v': 'USDC mint', 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA': 'Token Program' };
+  function checkSolana(addr) {
+    if (typeof addr !== 'string' || !/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(addr)) return 'not base58';
+    if (SOL_DENY[addr]) return SOL_DENY[addr];
+    var b = b58decode(addr);
+    if (!b || b.length !== 32) return 'does not decode to 32 bytes';
+    return null;
+  }
+
+  // ---------------------------------------------------------------- Bitcoin: bech32 (BIP-173), mainnet, witness v0
+  var CS = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
+  function polymod(values) {
+    var GEN = [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3], chk = 1;
+    for (var i = 0; i < values.length; i++) {
+      var top = chk >>> 25; chk = ((chk & 0x1ffffff) << 5) ^ values[i];
+      for (var j = 0; j < 5; j++) if ((top >>> j) & 1) chk ^= GEN[j];
+    }
+    return chk >>> 0;
+  }
+  function hrpExpand(h) { var r = [], i; for (i = 0; i < h.length; i++) r.push(h.charCodeAt(i) >> 5); r.push(0); for (i = 0; i < h.length; i++) r.push(h.charCodeAt(i) & 31); return r; }
+  function checkBitcoin(addr) {
+    if (typeof addr !== 'string' || addr !== addr.toLowerCase() || addr.indexOf('bc1') !== 0) return 'not a lowercase bc1 address';
+    var pos = addr.lastIndexOf('1'), hrp = addr.slice(0, pos), data = [];
+    if (hrp !== 'bc' || addr.length - pos - 1 < 6) return 'bad bech32 layout';
+    for (var i = pos + 1; i < addr.length; i++) { var d = CS.indexOf(addr[i]); if (d < 0) return 'bad bech32 character'; data.push(d); }
+    if (polymod(hrpExpand(hrp).concat(data)) !== 1) return 'bech32 checksum mismatch (or bech32m)';
+    if (data[0] !== 0) return 'only witness v0 (bc1q…) is accepted here';
+    var acc = 0, bits = 0, prog = [];
+    for (var k = 1; k < data.length - 6; k++) { acc = (acc << 5) | data[k]; bits += 5; while (bits >= 8) { bits -= 8; prog.push((acc >> bits) & 255); } }
+    if (bits >= 5 || ((acc << (8 - bits)) & 255)) return 'bad padding';
+    if (prog.length !== 20 && prog.length !== 32) return 'witness program must be 20 or 32 bytes';
+    return null;
+  }
+
+  function checkAll(p) {
+    p = p || {};
+    var problems = {};
+    var e = checkEvm(p.evm); if (e) problems.evm = e;
+    var s = checkSolana(p.solana); if (s) problems.solana = s;
+    var b = checkBitcoin(p.bitcoin); if (b) problems.bitcoin = b;
+    return problems;
+  }
+
+  return { keccak256Hex: keccak256Hex, toChecksumAddress: toChecksumAddress, checkEvm: checkEvm, checkSolana: checkSolana, checkBitcoin: checkBitcoin, checkAll: checkAll };
+})();
+
+
+</script>
+<script>
+var GLOSSARY = {"version":"0.1.0","terms":[{"cat":"basics","en":"blockchain","zh_cn":"区块链","zh_tw":"區塊鏈"},{"cat":"basics","en":"onchain","aliases":["on-chain","on chain"],"zh_cn":"链上","zh_tw":"鏈上"},{"cat":"basics","en":"offchain","aliases":["off-chain","off chain"],"zh_cn":"链下","zh_tw":"鏈下"},{"cat":"basics","en":"cryptocurrency","aliases":["cryptocurrencies"],"zh_cn":"加密货币","zh_tw":"加密貨幣","alt":["加密资产","加密資產"]},{"cat":"basics","en":"crypto","zh_cn":"加密货币","zh_tw":"加密貨幣","alt":["加密","币圈","幣圈","Crypto"],"note":"作行业名时译「加密行业」；作资产时译「加密货币/加密资产」。"},{"cat":"basics","en":"Web3","keep_en":true,"zh_cn":"Web3","zh_tw":"Web3"},{"cat":"basics","en":"decentralized","aliases":["decentralised","decentralization","decentralisation"],"zh_cn":"去中心化","zh_tw":"去中心化"},{"cat":"basics","en":"permissionless","zh_cn":"无需许可","zh_tw":"無需許可","alt":["免许可","免許可"],"avoid":["未经许可","未經許可","无许可证"],"note":"permissionless 是「谁都能用、不用申请」，不是「没拿到许可」。"},{"cat":"basics","en":"trustless","zh_cn":"去信任","zh_tw":"去信任","alt":["无需信任","無需信任","免信任"],"avoid":["不可信","不值得信任","不信任"],"note":"trustless = 不需要信任第三方，绝不是「不可信」。"},{"cat":"basics","en":"node","aliases":["nodes"],"zh_cn":"节点","zh_tw":"節點","alt":["Node"]},{"cat":"basics","en":"validator","zh_cn":"验证者","zh_tw":"驗證者","alt":["验证节点","驗證節點","验证人","驗證人"]},{"cat":"basics","en":"consensus","zh_cn":"共识","zh_tw":"共識"},{"cat":"basics","en":"block explorer","zh_cn":"区块浏览器","zh_tw":"區塊瀏覽器","alt":["浏览器","瀏覽器"]},{"cat":"basics","en":"block time","zh_cn":"出块时间","zh_tw":"出塊時間","alt":["区块时间","區塊時間"]},{"cat":"basics","en":"block height","zh_cn":"区块高度","zh_tw":"區塊高度"},{"cat":"basics","en":"mainnet","zh_cn":"主网","zh_tw":"主網","alt":["Mainnet"]},{"cat":"basics","en":"testnet","zh_cn":"测试网","zh_tw":"測試網","alt":["Testnet"]},{"cat":"basics","en":"hard fork","zh_cn":"硬分叉","zh_tw":"硬分叉"},{"cat":"basics","en":"finality","zh_cn":"最终确定性","zh_tw":"最終確定性","alt":["最终性","最終性","终局性","終局性","最终确认","最終確認"]},{"cat":"basics","en":"hash","zh_cn":"哈希","zh_tw":"雜湊","alt":["哈希值","雜湊值","Hash","散列"]},{"cat":"basics","en":"transaction hash","aliases":["tx hash","txhash"],"zh_cn":"交易哈希","zh_tw":"交易雜湊","alt":["Tx Hash","交易 Hash","交易 ID","交易ID","哈希","雜湊"]},{"cat":"basics","en":"Merkle tree","zh_cn":"默克尔树","zh_tw":"默克爾樹","alt":["Merkle 树","Merkle 樹"]},{"cat":"basics","en":"protocol","aliases":["protocols"],"zh_cn":"协议","zh_tw":"協議","alt":["協定"]},{"cat":"basics","en":"smart contract","zh_cn":"智能合约","zh_tw":"智慧合約","alt":["智能合約","合约","合約"],"avoid":["聪明合约","聰明合約","智慧型合同","智能合同"],"note":"「智能合同」是法律语境用词，链上合约统一用「智能合约」；台湾两种都常见。"},{"cat":"basics","en":"dApp","aliases":["dapps","dApps","DApp"],"keep_en":true,"zh_cn":"dApp","zh_tw":"dApp","alt":["去中心化应用","去中心化應用","DApp"]},{"cat":"basics","en":"oracle","zh_cn":"预言机","zh_tw":"預言機","avoid":["神谕","神諭","甲骨文"],"note":"「甲骨文」是 Oracle 公司，链上 oracle 一律译「预言机」。"},{"cat":"basics","en":"interoperability","zh_cn":"互操作性","zh_tw":"互通性","alt":["互操作性","互通性"]},{"cat":"scaling","en":"Layer 2","aliases":["L2","layer-2","layer two","L2s"],"keep_en":true,"zh_cn":"二层网络","zh_tw":"二層網路","alt":["Layer 2","L2","二层","二層","第二层","第二層","Layer2"]},{"cat":"scaling","en":"Layer 1","aliases":["L1","layer-1","layer one"],"keep_en":true,"zh_cn":"一层网络","zh_tw":"一層網路","alt":["Layer 1","L1","公链","公鏈","一层","一層","Layer1"]},{"cat":"scaling","en":"rollup","aliases":["rollups","roll-up"],"keep_en":true,"zh_cn":"Rollup","zh_tw":"Rollup","alt":["卷叠","卷疊"],"avoid":["卷起","汇总","彙總","卷饼"],"note":"中文社区普遍保留英文 Rollup。"},{"cat":"scaling","en":"optimistic rollup","keep_en":true,"zh_cn":"Optimistic Rollup","zh_tw":"Optimistic Rollup","alt":["乐观 Rollup","樂觀 Rollup","乐观卷叠","樂觀卷疊"]},{"cat":"scaling","en":"zero-knowledge proof","aliases":["zero knowledge proof","ZK proof","ZKP","zk-proof"],"zh_cn":"零知识证明","zh_tw":"零知識證明","alt":["ZK 证明","ZK 證明","ZKP"]},{"cat":"scaling","en":"sequencer","zh_cn":"排序器","zh_tw":"排序器","alt":["定序器","Sequencer"]},{"cat":"scaling","en":"bridge","aliases":["bridging","bridged","cross-chain bridge"],"zh_cn":"跨链桥","zh_tw":"跨鏈橋","alt":["跨链","跨鏈","桥接","橋接","桥","橋"],"note":"动词 bridge your ETH 译「跨链转入」；不要只写「桥梁」。"},{"cat":"scaling","en":"Superchain","keep_en":true,"zh_cn":"超级链","zh_tw":"超級鏈","alt":["Superchain"]},{"cat":"scaling","en":"OP Stack","keep_en":true,"zh_cn":"OP Stack","zh_tw":"OP Stack"},{"cat":"wallet","en":"wallet","aliases":["wallets"],"zh_cn":"钱包","zh_tw":"錢包","avoid":["钱夹","錢夾","皮夹","皮夾"]},{"cat":"wallet","en":"connect wallet","zh_cn":"连接钱包","zh_tw":"連接錢包","alt":["連結錢包","链接钱包"],"avoid":["连接钱夹"]},{"cat":"wallet","en":"wallet address","zh_cn":"钱包地址","zh_tw":"錢包地址","alt":["地址"]},{"cat":"wallet","en":"self-custody","aliases":["self custody","self-custodial"],"zh_cn":"自托管","zh_tw":"自託管","alt":["自主托管","自主託管","非托管","非託管"]},{"cat":"wallet","en":"non-custodial","aliases":["noncustodial"],"zh_cn":"非托管","zh_tw":"非託管","alt":["自托管","自託管"]},{"cat":"wallet","en":"custodial","zh_cn":"托管","zh_tw":"託管"},{"cat":"wallet","en":"seed phrase","aliases":["recovery phrase","secret recovery phrase","mnemonic phrase","mnemonic"],"zh_cn":"助记词","zh_tw":"助記詞","alt":["恢复短语","恢復短語","私钥助记词"],"avoid":["种子短语","種子短語","种子词","種子詞","种子密码"],"note":"MetaMask 中文界面用「助记词」；直译「种子短语」是典型机翻。"},{"cat":"wallet","en":"private key","aliases":["private keys"],"zh_cn":"私钥","zh_tw":"私鑰"},{"cat":"wallet","en":"public key","zh_cn":"公钥","zh_tw":"公鑰"},{"cat":"wallet","en":"hardware wallet","zh_cn":"硬件钱包","zh_tw":"硬體錢包","alt":["冷钱包","冷錢包"]},{"cat":"wallet","en":"hot wallet","zh_cn":"热钱包","zh_tw":"熱錢包"},{"cat":"wallet","en":"cold wallet","aliases":["cold storage"],"zh_cn":"冷钱包","zh_tw":"冷錢包","alt":["冷存储","冷儲存"]},{"cat":"wallet","en":"smart wallet","aliases":["smart account","smart contract wallet"],"zh_cn":"智能钱包","zh_tw":"智慧錢包","alt":["智能錢包","智能账户","智能帳戶","合约钱包","合約錢包","Smart Wallet"]},{"cat":"wallet","en":"account abstraction","zh_cn":"账户抽象","zh_tw":"帳戶抽象","alt":["帳號抽象"]},{"cat":"wallet","en":"passkey","aliases":["passkeys"],"keep_en":true,"zh_cn":"通行密钥","zh_tw":"通行密鑰","alt":["密碼金鑰","Passkey"],"note":"苹果简中用「通行密钥」，Google 台湾用「密碼金鑰」。"},{"cat":"wallet","en":"multisig","aliases":["multi-sig","multisignature","multi-signature"],"zh_cn":"多签","zh_tw":"多簽","alt":["多重签名","多重簽名","Multisig"]},{"cat":"wallet","en":"signature","aliases":["signatures"],"zh_cn":"签名","zh_tw":"簽名","alt":["簽章"]},{"cat":"security","en":"phishing","zh_cn":"钓鱼","zh_tw":"釣魚","alt":["网络钓鱼","網路釣魚"]},{"cat":"security","en":"address poisoning","zh_cn":"地址投毒","zh_tw":"地址投毒","alt":["地址污染"]},{"cat":"security","en":"token approval","aliases":["token approvals","allowance"],"zh_cn":"授权","zh_tw":"授權","alt":["授权额度","授權額度"],"avoid":["批准书"],"note":"UI 里 Approve 按钮译「授权」，不是「批准」。"},{"cat":"security","en":"revoke","aliases":["revoked","revoking"],"zh_cn":"撤销授权","zh_tw":"撤銷授權","alt":["撤销","撤銷","取消授权","取消授權"]},{"cat":"security","en":"drainer","aliases":["wallet drainer","drainers"],"keep_en":true,"zh_cn":"盗币程序","zh_tw":"盜幣程式","alt":["Drainer","盗币","盜幣","钱包盗取","錢包盜取"]},{"cat":"security","en":"audit","aliases":["audits","audited","security audit"],"zh_cn":"审计","zh_tw":"審計","alt":["稽核","安全审计","安全審計"]},{"cat":"security","en":"exploit","aliases":["exploited","exploits"],"zh_cn":"漏洞攻击","zh_tw":"漏洞攻擊","alt":["攻击","攻擊","被黑","黑客攻击","駭客攻擊","漏洞利用"],"avoid":["剥削","剝削"]},{"cat":"security","en":"rug pull","aliases":["rug","rugged","rug-pull"],"zh_cn":"跑路","zh_tw":"跑路","alt":["卷款跑路","捲款跑路","Rug"],"avoid":["拉地毯","拉地毯骗局","地毯拉动"]},{"cat":"security","en":"scam","aliases":["scams","scammer"],"zh_cn":"骗局","zh_tw":"詐騙","alt":["诈骗","詐騙","騙局","骗子","騙子"]},{"cat":"security","en":"MEV","keep_en":true,"zh_cn":"MEV","zh_tw":"MEV","alt":["最大可提取价值","最大可提取價值"]},{"cat":"security","en":"front-running","aliases":["frontrunning","front-run","frontrun"],"zh_cn":"抢跑","zh_tw":"搶跑","alt":["抢先交易","搶先交易"]},{"cat":"security","en":"sandwich attack","aliases":["sandwich attacks"],"zh_cn":"三明治攻击","zh_tw":"三明治攻擊","alt":["夹子","夾子"]},{"cat":"tx","en":"gas","keep_en":true,"zh_cn":"Gas","zh_tw":"Gas","alt":["Gas 费","Gas 費","燃料费","燃料費","手续费","手續費","矿工费","礦工費","网络费用","網路費用"],"avoid":["汽油","气体","氣體","燃气","燃氣"],"note":"保留 Gas 最稳妥；面向小白可写「Gas 费（网络手续费）」。"},{"cat":"tx","en":"gas fee","aliases":["gas fees"],"keep_en":true,"zh_cn":"Gas 费","zh_tw":"Gas 費","alt":["手续费","手續費","燃料费","燃料費","网络费用","網路費用","矿工费","礦工費"],"avoid":["汽油费","汽油費","气体费"]},{"cat":"tx","en":"gas limit","keep_en":true,"zh_cn":"Gas 上限","zh_tw":"Gas 上限","alt":["燃料上限","Gas Limit"]},{"cat":"tx","en":"base fee","zh_cn":"基础费用","zh_tw":"基本費用","alt":["基础费","基礎費用","Base Fee"],"note":"EIP-1559 的 base fee，与 Base 链无关。"},{"cat":"tx","en":"priority fee","zh_cn":"优先费","zh_tw":"優先費","alt":["小费","小費","优先费用","優先費用"]},{"cat":"tx","en":"nonce","keep_en":true,"zh_cn":"Nonce","zh_tw":"Nonce","alt":["交易序号","交易序號","序号","序號"],"note":"交易 nonce 是账户交易序号；密码学语境才译「随机数」。"},{"cat":"tx","en":"pending","zh_cn":"待确认","zh_tw":"待確認","alt":["处理中","處理中","等待中","等待确认","等待確認","确认中","確認中"],"avoid":["悬而未决","懸而未決","未决","未決"]},{"cat":"tx","en":"transfer","aliases":["transfers","transferred"],"zh_cn":"转账","zh_tw":"轉帳","alt":["转移","轉移","发送","傳送","轉賬","划转","劃轉"]},{"cat":"tx","en":"deposit","aliases":["deposits","deposited"],"zh_cn":"存入","zh_tw":"存入","alt":["充值","充币","充幣","入金","存款","儲值"],"note":"交易所语境用「充值/充币」，DeFi 语境用「存入」。"},{"cat":"tx","en":"withdraw","aliases":["withdrawal","withdrawals","withdrawn"],"zh_cn":"提取","zh_tw":"提領","alt":["提币","提幣","提现","提現","取出","提款","提取"],"note":"交易所语境用「提币/提现」，DeFi 语境用「取出/提取」。"},{"cat":"tx","en":"onramp","aliases":["on-ramp","fiat on-ramp","on ramp"],"zh_cn":"入金","zh_tw":"入金","alt":["法币入金","法幣入金","买币","買幣"]},{"cat":"tx","en":"offramp","aliases":["off-ramp","off ramp"],"zh_cn":"出金","zh_tw":"出金","alt":["法币出金","法幣出金"]},{"cat":"tx","en":"gasless","aliases":["sponsored transaction","sponsored transactions","gas-free"],"zh_cn":"免 Gas","zh_tw":"免 Gas","alt":["无 Gas","無 Gas","免手续费","免手續費","Gas 代付","免Gas"]},{"cat":"tx","en":"paymaster","keep_en":true,"zh_cn":"Paymaster","zh_tw":"Paymaster","alt":["代付合约","代付合約","Gas 代付"],"note":"ERC-4337 中替用户支付 Gas 的合约。"},{"cat":"tx","en":"bundler","keep_en":true,"zh_cn":"Bundler","zh_tw":"Bundler","alt":["打包器"]},{"cat":"defi","en":"swap","aliases":["swaps","swapped","swapping"],"zh_cn":"兑换","zh_tw":"兌換","alt":["交换","交換","闪兑","閃兌","Swap"],"avoid":["掉期","互换合约"],"note":"金融里的 swap（掉期/互换）不是代币兑换。"},{"cat":"defi","en":"slippage","zh_cn":"滑点","zh_tw":"滑價","alt":["滑點"]},{"cat":"defi","en":"price impact","zh_cn":"价格影响","zh_tw":"價格影響","alt":["价格冲击","價格衝擊"]},{"cat":"defi","en":"liquidity","zh_cn":"流动性","zh_tw":"流動性"},{"cat":"defi","en":"liquidity pool","aliases":["liquidity pools"],"zh_cn":"流动性池","zh_tw":"流動性池","alt":["资金池","資金池","池子","池"]},{"cat":"defi","en":"liquidity provider","aliases":["liquidity providers","LP","LPs"],"zh_cn":"流动性提供者","zh_tw":"流動性提供者","alt":["LP","流动性提供方","流動性提供方"]},{"cat":"defi","en":"automated market maker","aliases":["AMM","AMMs"],"zh_cn":"自动做市商","zh_tw":"自動做市商","alt":["AMM"]},{"cat":"defi","en":"DEX","aliases":["DEXs","DEXes","decentralized exchange"],"keep_en":true,"zh_cn":"去中心化交易所","zh_tw":"去中心化交易所","alt":["DEX"]},{"cat":"defi","en":"CEX","aliases":["centralized exchange"],"keep_en":true,"zh_cn":"中心化交易所","zh_tw":"中心化交易所","alt":["CEX","交易所"]},{"cat":"defi","en":"order book","aliases":["orderbook"],"zh_cn":"订单簿","zh_tw":"訂單簿","alt":["挂单簿","掛單簿"]},{"cat":"defi","en":"limit order","aliases":["limit orders"],"zh_cn":"限价单","zh_tw":"限價單","alt":["限价委托","限價委託"]},{"cat":"defi","en":"market order","aliases":["market orders"],"zh_cn":"市价单","zh_tw":"市價單","alt":["市价委托","市價委託"]},{"cat":"defi","en":"yield","aliases":["yields"],"zh_cn":"收益","zh_tw":"收益","alt":["收益率"],"avoid":["产量","產量","屈服"]},{"cat":"defi","en":"APY","keep_en":true,"zh_cn":"年化收益率","zh_tw":"年化收益率","alt":["APY","年化"],"note":"APY 含复利；APR 不含复利，不要混用。"},{"cat":"defi","en":"APR","keep_en":true,"zh_cn":"年化利率","zh_tw":"年化利率","alt":["APR","年利率"]},{"cat":"defi","en":"TVL","aliases":["total value locked"],"keep_en":true,"zh_cn":"总锁仓量","zh_tw":"總鎖倉量","alt":["TVL","锁仓量","鎖倉量","總鎖定價值","总锁定价值"]},{"cat":"defi","en":"lending","zh_cn":"借贷","zh_tw":"借貸"},{"cat":"defi","en":"collateral","zh_cn":"抵押品","zh_tw":"抵押品","alt":["抵押物","担保品","擔保品","抵押"]},{"cat":"defi","en":"liquidation","aliases":["liquidated","liquidations"],"zh_cn":"清算","zh_tw":"清算","avoid":["液化"]},{"cat":"defi","en":"stablecoin","aliases":["stablecoins"],"zh_cn":"稳定币","zh_tw":"穩定幣"},{"cat":"defi","en":"staking","aliases":["stake","staked","stakes"],"zh_cn":"质押","zh_tw":"質押","alt":["抵押","Staking"],"avoid":["押注","下注","赌注","賭注","打赌","打賭"],"note":"stake 在博彩里是「赌注」，在加密里是「质押」——机翻最常见的错误之一。"},{"cat":"defi","en":"restaking","aliases":["restake","restaked"],"zh_cn":"再质押","zh_tw":"再質押","alt":["重质押","重質押","再抵押"]},{"cat":"defi","en":"liquid staking","zh_cn":"流动性质押","zh_tw":"流動性質押"},{"cat":"defi","en":"unstake","aliases":["unstaking","unstaked"],"zh_cn":"解除质押","zh_tw":"解除質押","alt":["取消质押","取消質押","赎回","贖回","解押"]},{"cat":"token","en":"token","aliases":["tokens"],"zh_cn":"代币","zh_tw":"代幣","alt":["Token","通证","通證","币","幣","令牌","權杖"],"note":"API token / access token 是「令牌」，链上 token 是「代币」。"},{"cat":"token","en":"native token","zh_cn":"原生代币","zh_tw":"原生代幣"},{"cat":"token","en":"governance token","zh_cn":"治理代币","zh_tw":"治理代幣"},{"cat":"token","en":"airdrop","aliases":["airdrops","airdropped"],"zh_cn":"空投","zh_tw":"空投"},{"cat":"token","en":"vesting","aliases":["vested","vesting schedule"],"zh_cn":"线性释放","zh_tw":"線性釋放","alt":["解锁","解鎖","锁仓","鎖倉","归属","歸屬","释放","釋放"],"avoid":["背心"]},{"cat":"token","en":"token unlock","aliases":["token unlocks"],"zh_cn":"解锁","zh_tw":"解鎖"},{"cat":"token","en":"market cap","aliases":["market capitalization"],"zh_cn":"市值","zh_tw":"市值"},{"cat":"token","en":"fully diluted valuation","aliases":["FDV"],"keep_en":true,"zh_cn":"完全稀释估值","zh_tw":"完全稀釋估值","alt":["FDV"]},{"cat":"token","en":"tokenomics","zh_cn":"代币经济学","zh_tw":"代幣經濟學","alt":["代币经济","代幣經濟","经济模型","經濟模型"]},{"cat":"token","en":"whitepaper","aliases":["white paper"],"zh_cn":"白皮书","zh_tw":"白皮書"},{"cat":"token","en":"roadmap","zh_cn":"路线图","zh_tw":"路線圖"},{"cat":"token","en":"mint","aliases":["minting","minted","mints"],"zh_cn":"铸造","zh_tw":"鑄造","alt":["铸币","鑄幣","Mint"],"avoid":["薄荷"]},{"cat":"token","en":"burn","aliases":["burned","burnt","burning"],"zh_cn":"销毁","zh_tw":"銷毀","alt":["燃烧","燃燒"]},{"cat":"token","en":"whale","aliases":["whales"],"zh_cn":"巨鲸","zh_tw":"巨鯨","alt":["鲸鱼","鯨魚","大户","大戶"]},{"cat":"nft","en":"NFT","aliases":["NFTs"],"keep_en":true,"zh_cn":"NFT","zh_tw":"NFT","alt":["非同质化代币","非同質化代幣"]},{"cat":"nft","en":"collectible","aliases":["collectibles"],"zh_cn":"收藏品","zh_tw":"收藏品"},{"cat":"nft","en":"creator","aliases":["creators"],"zh_cn":"创作者","zh_tw":"創作者"},{"cat":"nft","en":"royalty","aliases":["royalties"],"zh_cn":"版税","zh_tw":"版稅"},{"cat":"nft","en":"floor price","zh_cn":"地板价","zh_tw":"地板價"},{"cat":"nft","en":"marketplace","aliases":["marketplaces"],"zh_cn":"交易市场","zh_tw":"交易市場","alt":["市场","市場","平台"]},{"cat":"nft","en":"allowlist","aliases":["whitelist","allow list"],"zh_cn":"白名单","zh_tw":"白名單"},{"cat":"dao","en":"DAO","aliases":["DAOs"],"keep_en":true,"zh_cn":"DAO","zh_tw":"DAO","alt":["去中心化自治组织","去中心化自治組織"]},{"cat":"dao","en":"governance","zh_cn":"治理","zh_tw":"治理"},{"cat":"dao","en":"proposal","aliases":["proposals"],"zh_cn":"提案","zh_tw":"提案"},{"cat":"dao","en":"delegate","aliases":["delegates","delegation","delegated"],"zh_cn":"委托","zh_tw":"委託","alt":["代表","代理人"]},{"cat":"dao","en":"quorum","zh_cn":"法定人数","zh_tw":"法定人數","alt":["法定票数","法定票數"]},{"cat":"dao","en":"treasury","zh_cn":"金库","zh_tw":"金庫","alt":["国库","國庫","资金库","資金庫","财库","財庫"],"avoid":["财政部","財政部"]},{"cat":"dao","en":"grant","aliases":["grants"],"zh_cn":"资助","zh_tw":"資助","alt":["赠款","贈款","补助","補助","Grant","资助金","資助金"]},{"cat":"dao","en":"bounty","aliases":["bounties"],"zh_cn":"赏金","zh_tw":"賞金","alt":["悬赏","懸賞"],"avoid":["慷慨","恩惠"]},{"cat":"dao","en":"retroactive funding","aliases":["retro funding","RetroPGF","retroactive public goods funding"],"zh_cn":"追溯资助","zh_tw":"追溯資助","alt":["回溯资助","回溯資助","回溯性资助","回溯性資助","Retro Funding"]},{"cat":"dao","en":"public goods","zh_cn":"公共物品","zh_tw":"公共財","alt":["公共产品","公共產品","公共品"]},{"cat":"dev","en":"RPC","keep_en":true,"zh_cn":"RPC","zh_tw":"RPC","alt":["RPC 节点","RPC 節點"]},{"cat":"dev","en":"indexer","aliases":["indexers"],"zh_cn":"索引器","zh_tw":"索引器"},{"cat":"dev","en":"API key","aliases":["API keys"],"keep_en":true,"zh_cn":"API 密钥","zh_tw":"API 金鑰","alt":["API Key","API 金钥"]},{"cat":"dev","en":"deploy","aliases":["deployed","deploying","deployment"],"zh_cn":"部署","zh_tw":"部署"},{"cat":"dev","en":"contract address","zh_cn":"合约地址","zh_tw":"合約地址"},{"cat":"dev","en":"proxy contract","zh_cn":"代理合约","zh_tw":"代理合約","alt":["代理","Proxy"]},{"cat":"dev","en":"upgradeable","aliases":["upgradable"],"zh_cn":"可升级","zh_tw":"可升級"},{"cat":"dev","en":"timelock","aliases":["time lock","time-lock"],"zh_cn":"时间锁","zh_tw":"時間鎖","alt":["Timelock"]},{"cat":"dev","en":"faucet","aliases":["faucets"],"zh_cn":"水龙头","zh_tw":"水龍頭","alt":["Faucet"],"note":"「水龙头」就是通行译法，不算机翻。"},{"cat":"dev","en":"Sign in with Ethereum","aliases":["SIWE"],"zh_cn":"使用以太坊登录","zh_tw":"使用以太坊登入","alt":["SIWE","以太坊登录","以太坊登入"]},{"cat":"names","en":"Base","case_sensitive":true,"keep_en":true,"zh_cn":"Base","zh_tw":"Base","avoid":["基地","基础链","基礎鏈","基链","基鏈","底座"],"note":"Coinbase 孵化的以太坊 L2，名称不翻译。注意小写 base fee 是另一个词条。"},{"cat":"names","en":"Base App","case_sensitive":true,"keep_en":true,"zh_cn":"Base App","zh_tw":"Base App","avoid":["基地应用","基地應用","基础应用","基礎應用"],"note":"原 Coinbase Wallet。"},{"cat":"names","en":"mini app","aliases":["mini apps","miniapp","miniapps"],"keep_en":true,"zh_cn":"小程序","zh_tw":"小程式","alt":["Mini App","迷你应用","迷你應用","Mini Apps"]},{"cat":"names","en":"Basename","aliases":["Basenames"],"case_sensitive":true,"keep_en":true,"zh_cn":"Basename","zh_tw":"Basename","alt":["Base 域名","Basenames"]},{"cat":"names","en":"ENS","case_sensitive":true,"keep_en":true,"zh_cn":"ENS","zh_tw":"ENS","alt":["以太坊域名服务","以太坊域名服務"]},{"cat":"names","en":"Ethereum","case_sensitive":true,"zh_cn":"以太坊","zh_tw":"以太坊","alt":["Ethereum"],"avoid":["以太网","以太網"],"note":"「以太网」是 Ethernet。"},{"cat":"names","en":"Ether","case_sensitive":true,"zh_cn":"以太币","zh_tw":"以太幣","alt":["ETH"]},{"cat":"names","en":"Bitcoin","case_sensitive":true,"zh_cn":"比特币","zh_tw":"比特幣","alt":["Bitcoin","BTC"]},{"cat":"names","en":"Optimism","case_sensitive":true,"keep_en":true,"zh_cn":"Optimism","zh_tw":"Optimism","alt":["OP 主网","OP 主網","OP Mainnet"],"avoid":["乐观主义","樂觀主義"]},{"cat":"names","en":"Arbitrum","case_sensitive":true,"keep_en":true,"zh_cn":"Arbitrum","zh_tw":"Arbitrum","avoid":["仲裁"]},{"cat":"names","en":"Polygon","case_sensitive":true,"keep_en":true,"zh_cn":"Polygon","zh_tw":"Polygon","avoid":["多边形","多邊形"]},{"cat":"names","en":"Chainlink","case_sensitive":true,"keep_en":true,"zh_cn":"Chainlink","zh_tw":"Chainlink","avoid":["链环","鏈環","链条"]},{"cat":"names","en":"Circle","case_sensitive":true,"keep_en":true,"zh_cn":"Circle","zh_tw":"Circle","avoid":["圆圈","圓圈"]},{"cat":"names","en":"Lens","case_sensitive":true,"keep_en":true,"zh_cn":"Lens","zh_tw":"Lens","avoid":["镜头","鏡頭"]},{"cat":"names","en":"Farcaster","case_sensitive":true,"keep_en":true,"zh_cn":"Farcaster","zh_tw":"Farcaster"},{"cat":"names","en":"x402","keep_en":true,"zh_cn":"x402","zh_tw":"x402","note":"基于 HTTP 402 Payment Required 的互联网原生支付协议，名称不翻译。"},{"cat":"names","en":"facilitator","aliases":["facilitators"],"keep_en":true,"zh_cn":"Facilitator","zh_tw":"Facilitator","alt":["协调方","協調方","结算服务","結算服務","协调器","協調器"],"note":"x402 里负责验证与结算付款的服务。"},{"cat":"names","en":"AI agent","aliases":["AI agents"],"zh_cn":"AI 智能体","zh_tw":"AI 代理","alt":["智能体","智能體","AI Agent","Agent","代理","AI 智能體"],"note":"大陆近年主流译「智能体」；台湾多用「AI 代理」。"},{"cat":"names","en":"KYC","keep_en":true,"zh_cn":"KYC","zh_tw":"KYC","alt":["身份认证","身份認證","实名认证","實名認證"]},{"cat":"ui","en":"onboarding","zh_cn":"新手引导","zh_tw":"新手引導","alt":["引导","引導","入门","入門","上手","注册流程","註冊流程"],"avoid":["登机","登機"]},{"cat":"ui","en":"claim","aliases":["claims","claimed"],"zh_cn":"领取","zh_tw":"領取","alt":["申领","申領","认领","認領"],"avoid":["声称","聲稱","索赔","索賠"],"note":"Claim rewards = 领取奖励；不是「声称」也不是「索赔」。"},{"cat":"ui","en":"reward","aliases":["rewards"],"zh_cn":"奖励","zh_tw":"獎勵","alt":["收益"]},{"cat":"ui","en":"points","zh_cn":"积分","zh_tw":"積分","alt":["点数","點數","Points"],"note":"仅指积分体系里的 points；一般语境的 key points 译「要点」。"},{"cat":"ui","en":"leaderboard","zh_cn":"排行榜","zh_tw":"排行榜"},{"cat":"ui","en":"referral","aliases":["referrals"],"zh_cn":"邀请","zh_tw":"邀請","alt":["推荐","推薦","返佣"]},{"cat":"ui","en":"dashboard","zh_cn":"仪表盘","zh_tw":"儀表板","alt":["控制台","看板","面板","数据面板","數據面板","儀表盤"]},{"cat":"ui","en":"balance","aliases":["balances"],"zh_cn":"余额","zh_tw":"餘額","avoid":["平衡"],"note":"账户 balance 是「余额」，机翻常译成「平衡」。"},{"cat":"ui","en":"fee","aliases":["fees"],"zh_cn":"费用","zh_tw":"費用","alt":["手续费","手續費","费","費"]},{"cat":"ui","en":"compliance","zh_cn":"合规","zh_tw":"合規","alt":["法遵"]},{"cat":"ui","en":"regulation","aliases":["regulations","regulatory"],"zh_cn":"监管","zh_tw":"監管","alt":["法规","法規"]}]};
+var PAYOUT = {"evm":"0x6d35dE60F29FC533a02d936C32D8822aB862a185","solana":"24fAusyGXX9e4dzRqELLiV5WGq1aKoBrxwrJdzwrjhUH","bitcoin":"bc1q6s5wpn8jhl0cfzrkev7l4yf8eups890f8mczq2"};
+var EXAMPLES = {"en":"{\n  \"app\": {\n    \"title\": \"Receipts\",\n    \"tagline\": \"Every transfer becomes a one-of-a-kind artwork.\"\n  },\n  \"wallet\": {\n    \"connect\": \"Connect wallet\",\n    \"connected\": \"Connected as {address}\",\n    \"balance\": \"Balance: {amount} USDC\",\n    \"disconnect\": \"Disconnect\"\n  },\n  \"send\": {\n    \"title\": \"Send USDC on Base\",\n    \"amountLabel\": \"Amount\",\n    \"min\": \"Minimum {min} USDC\",\n    \"fee\": \"Network fee: ~{fee} (gas is sponsored by a paymaster)\",\n    \"confirm\": \"Confirm transfer\",\n    \"pending\": \"Transaction pending… {count, plural, one {# confirmation} other {# confirmations}}\",\n    \"success\": \"Done! View it on \u003c0>BaseScan\u003c/0>.\",\n    \"error\": \"Transaction failed: %s\"\n  },\n  \"safety\": {\n    \"seed\": \"Never share your seed phrase. Base support will never ask for it.\",\n    \"approval\": \"Review your token approvals regularly and revoke the ones you no longer use.\",\n    \"poison\": \"Address poisoning alert: the address you pasted looks like one in your history, but it is different.\",\n    \"verify\": \"Always verify the contract address: 0x833589fcd6edb6e08f4c7c32d4f71b54bda02913 (USDC on Base).\"\n  },\n  \"staking\": {\n    \"title\": \"Staking rewards\",\n    \"apy\": \"Estimated APY: {apy}%\",\n    \"unstake\": \"Unstake anytime. Rewards can be claimed every 24 hours.\"\n  },\n  \"docs\": {\n    \"learnMore\": \"Learn more at https://docs.base.org\",\n    \"x402\": \"Pay per request with x402 — no account, no API key.\"\n  }\n}\n","zh":"{\n  \"app\": {\n    \"title\": \"Receipts\",\n    \"tagline\": \"每一个转移都变成一件独特的艺术品.\"\n  },\n  \"wallet\": {\n    \"connect\": \"连接钱夹\",\n    \"connected\": \"已连接为{地址}\",\n    \"balance\": \"平衡: {amount}USDC\",\n    \"disconnect\": \"断开\"\n  },\n  \"send\": {\n    \"title\": \"在基地上发送USDC\",\n    \"amountLabel\": \"数量\",\n    \"min\": \"最低{min} USDC\",\n    \"fee\": \"网络费:~{fee}(汽油由付款主管赞助)\",\n    \"confirm\": \"确认转移\",\n    \"pending\": \"交易悬而未决... {count, plural, one {# 确认} other {# 确认}}\",\n    \"success\": \"完成!在BaseScan上查看。\",\n    \"error\": \"交易失败:\"\n  },\n  \"safety\": {\n    \"seed\": \"永远不要分享你的种子短语。基地支持永远不会要求它。\",\n    \"approval\": \"定期审查您的令牌批准并撤销您不再使用的。\",\n    \"poison\": \"地址中毒警报：您粘贴的地址看起来像历史中的一个，但它是不同的。\",\n    \"verify\": \"始终验证合约地址：0x833589fcd6edb6e08f4c7c32d4f71b54bda0291（基地上的USDC）。\"\n  },\n  \"staking\": {\n    \"title\": \"押注奖励\",\n    \"apy\": \"估计ＡＰＹ：{apy}%\",\n    \"unstake\": \"隨時解除質押。獎勵每24小時可聲稱。\"\n  },\n  \"docs\": {\n    \"learnMore\": \"了解更多 https://docs.base.com\",\n    \"x402\": \"Pay per request with x402 — no account, no API key.\"\n  }\n}\n"};
+</script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var L = ZHKitCore.createLinter(GLOSSARY);
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function tryJson(s) { try { var v = JSON.parse(s); return v && typeof v === 'object' ? v : null; } catch (e) { return null; } }
+  function copy(text, btn) {
+    var done = function () { if (!btn) return; var t = btn.textContent; btn.textContent = '已复制 ✓'; setTimeout(function () { btn.textContent = t; }, 1400); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { fallback(); });
+    else fallback();
+    function fallback() { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} document.body.removeChild(ta); }
+  }
+
+  // ------------------------------------------------------------ check
+  var lastReport = null;
+  function runCheck() {
+    var src = $('src').value, tgt = $('tgt').value, out = $('result');
+    var opts = { variant: $('variant').value || undefined, spacing: $('spacing').checked ? undefined : false };
+    if (!tgt.trim()) { out.className = ''; out.innerHTML = '<p class="s-warning">请先在右边贴中文译文。</p>'; return; }
+    var rep, mode;
+    try {
+      var a = tryJson(src), b = tryJson(tgt);
+      if (!src.trim()) { rep = L.lintZh(tgt, opts); mode = '只查中文（无原文）'; }
+      else if (a && b) { rep = L.lintJson(a, b, opts); mode = 'i18n JSON'; }
+      else if (/\n/.test(src.trim()) || /\n/.test(tgt.trim())) { rep = L.lintMarkdown(src, tgt, opts); mode = 'Markdown / 文档'; }
+      else {
+        var variant = opts.variant || ZHKitCore.detectVariant(tgt);
+        var issues = L.lintPair(src, tgt, { variant: variant, spacing: opts.spacing });
+        rep = { tool: 'web3-zh-kit', version: L.version, mode: 'text', variant: variant, summary: L.summarize(issues), issues: issues };
+        mode = '单句';
+      }
+    } catch (e) { out.className = ''; out.innerHTML = '<p class="s-error">检查出错：' + esc(e.message) + '</p>'; return; }
+    lastReport = rep;
+    var s = rep.summary, cls = s.errors ? 's-error' : s.warnings ? 's-warning' : 's-ok';
+    var h = '<div class="score"><b class="' + cls + '">' + s.score + '<span class="note">/100</span></b>' +
+      '<span class="pill s-error">' + s.errors + ' error</span><span class="pill s-warning">' + s.warnings + ' warning</span><span class="pill s-info">' + s.info + ' info</span>' +
+      '<span class="note">' + esc(mode) + ' · ' + esc(rep.variant) + (s.strings != null ? ' · ' + s.strings + ' 条字符串' : '') + '</span>' +
+      '<button class="ghost" id="copyReport">复制 Markdown 报告</button></div>';
+    if (!rep.issues.length) h += '<p class="s-ok">没有发现问题。 · No issues found.</p>';
+    else {
+      var order = { error: 0, warning: 1, info: 2 };
+      var list = rep.issues.slice().sort(function (x, y) { return order[x.severity] - order[y.severity]; });
+      h += '<div class="tblwrap"><table class="tbl"><thead><tr><th>级别</th><th>位置</th><th>规则</th><th>说明</th></tr></thead><tbody>';
+      list.forEach(function (i) {
+        var where = i.key ? i.key : (i.line ? 'L' + i.line : '–');
+        h += '<tr><td class="s-' + i.severity + '">' + i.severity + '</td><td class="mono">' + esc(where) + '</td><td class="mono">' + esc(i.rule) + '</td><td>' + esc(i.message) +
+          (i.count > 1 ? ' <span class="note">×' + i.count + '</span>' : '') + (i.sample ? '<br><span class="note mono">' + esc(i.sample) + '</span>' : '') + '</td></tr>';
+      });
+      h += '</tbody></table></div>';
+    }
+    h += '<p class="note">得分 = 100 − 8×error − 2×warning − 0.5×info。规则只查机械性问题，不判断译文是否通顺。</p>';
+    out.className = ''; out.innerHTML = h;
+    $('copyReport').onclick = function () { copy(ZHKitCore.formatReport(lastReport, 'md', 'web3-zh-kit online'), this); };
+  }
+  $('runCheck').onclick = runCheck;
+  $('loadExample').onclick = function () { $('src').value = EXAMPLES.en; $('tgt').value = EXAMPLES.zh; $('variant').value = ''; runCheck(); };
+  $('clearAll').onclick = function () { $('src').value = ''; $('tgt').value = ''; $('result').className = 'hidden'; };
+
+  // ------------------------------------------------------------ fix
+  $('runFix').onclick = function () {
+    var t = $('fixIn').value, opts = { spacing: $('spacing').checked ? undefined : false }, res, value;
+    if (!t.trim()) return;
+    var j = tryJson(t);
+    if (j) { res = L.fixJson(j, opts); value = JSON.stringify(res.value, null, 2); }
+    else if (/\n/.test(t)) { res = L.fixMarkdown(t, opts); value = res.value; }
+    else { res = ZHKitCore.fixText(t, opts); value = res.text; }
+    $('fixOut').value = value;
+    var ch = res.changes || {}, keys = Object.keys(ch);
+    $('fixInfo').textContent = keys.length ? '改了 ' + keys.map(function (k) { return k + ' ×' + ch[k]; }).join('，') : '没有需要修的地方';
+  };
+  $('copyFix').onclick = function () { copy($('fixOut').value, this); };
+
+  // ------------------------------------------------------------ glossary filter (rows are pre-rendered in HTML)
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#gtable tbody tr'));
+  function filterG() {
+    var q = $('gq').value.trim().toLowerCase(), c = $('gcat').value, n = 0;
+    rows.forEach(function (r) { var ok = (!c || r.getAttribute('data-cat') === c) && (!q || r.getAttribute('data-s').indexOf(q) >= 0); r.style.display = ok ? '' : 'none'; if (ok) n++; });
+    $('gcount').textContent = n + ' / ' + rows.length;
+  }
+  $('gq').oninput = filterG; $('gcat').onchange = filterG; filterG();
+
+  // ------------------------------------------------------------ support box (only after self-check)
+  var USDC_BASE = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', USDC_SOL = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
+  var problems = ZHKitPayout.checkAll(PAYOUT);
+  if (Object.keys(problems).length) { $('payHidden').className = 'note'; if (window.console) console.error('payout self-check failed', problems); return; }
+  $('payBox').className = '';
+  $('addrEvm').textContent = PAYOUT.evm; $('addrSol').textContent = PAYOUT.solana; $('addrBtc').textContent = PAYOUT.bitcoin;
+  Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function (b) { b.onclick = function () { copy(PAYOUT[b.getAttribute('data-copy')], b); }; });
+  [1, 3, 5].forEach(function (n) { $('eip' + n).href = 'ethereum:' + USDC_BASE + '@8453/transfer?address=' + PAYOUT.evm + '&uint256=' + (n * 1000000); });
+  [1, 3].forEach(function (n) { $('sol' + n).href = 'solana:' + PAYOUT.solana + '?amount=' + n + '&spl-token=' + USDC_SOL + '&label=web3-zh-kit&message=' + encodeURIComponent('Thanks for web3-zh-kit'); });
+
+  var st = $('tipStatus');
+  function say(html, cls) { st.className = cls || ''; st.innerHTML = html; }
+  function pad32(hex) { hex = hex.replace(/^0x/, ''); while (hex.length < 64) hex = '0' + hex; return hex; }
+  $('tipWallet1').onclick = function () {
+    var eth = window.ethereum, btn = this;
+    if (!eth || !eth.request) { say('没有检测到浏览器钱包。请复制上面的地址，在你的钱包里手动转账（Base 网络的 USDC）。'); return; }
+    btn.disabled = true;
+    var from;
+    eth.request({ method: 'eth_requestAccounts' }).then(function (acc) {
+      from = acc && acc[0]; if (!from) throw new Error('钱包没有返回账户');
+      return eth.request({ method: 'eth_chainId' });
+    }).then(function (cid) {
+      if (String(cid).toLowerCase() === '0x2105') return null;
+      return eth.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x2105' }] }).catch(function (e) {
+        if (e && e.code === 4902) return eth.request({ method: 'wallet_addEthereumChain', params: [{ chainId: '0x2105', chainName: 'Base', nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 }, rpcUrls: ['https://mainnet.base.org'], blockExplorerUrls: ['https://basescan.org'] }] });
+        throw e;
+      });
+    }).then(function () { return eth.request({ method: 'eth_chainId' }); }).then(function (cid) {
+      if (String(cid).toLowerCase() !== '0x2105') throw new Error('钱包当前不在 Base 网络，已取消');
+      if (!window.confirm('向 ' + PAYOUT.evm + ' 打赏 1 USDC（Base 网络）？\n下一步会在钱包里再确认一次。')) throw new Error('已取消');
+      var data = '0xa9059cbb' + pad32(PAYOUT.evm.toLowerCase()) + pad32((1000000).toString(16));
+      return eth.request({ method: 'eth_sendTransaction', params: [{ from: from, to: USDC_BASE, data: data, value: '0x0' }] });
+    }).then(function (tx) {
+      say('已提交，谢谢！交易：<a href="https://basescan.org/tx/' + esc(tx) + '" target="_blank" rel="noopener">' + esc(tx) + '</a>', 's-ok');
+    }).catch(function (e) {
+      say(esc((e && (e.code === 4001 ? '你在钱包里取消了' : e.message)) || '没有完成'), 's-warning');
+    }).then(function () { btn.disabled = false; });
+  };
+})();
+</script>
+</body>
+</html>

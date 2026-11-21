@@ -1,0 +1,37 @@
+{
+  "app": {
+    "title": "Receipts",
+    "tagline": "每一笔转账，都会变成一件独一无二的作品。"
+  },
+  "wallet": {
+    "connect": "连接钱包",
+    "connected": "已连接：{address}",
+    "balance": "余额：{amount} USDC",
+    "disconnect": "断开连接"
+  },
+  "send": {
+    "title": "在 Base 上发送 USDC",
+    "amountLabel": "金额",
+    "min": "最低 {min} USDC",
+    "fee": "网络费用：约 {fee}（Gas 由 Paymaster 代付）",
+    "confirm": "确认转账",
+    "pending": "交易待确认……{count, plural, other {已确认 # 次}}",
+    "success": "完成！在 <0>BaseScan</0> 上查看。",
+    "error": "交易失败：%s"
+  },
+  "safety": {
+    "seed": "切勿向任何人透露你的助记词。Base 官方支持人员绝不会向你索要。",
+    "approval": "请定期检查你的代币授权，撤销不再使用的授权。",
+    "poison": "地址投毒警告：你粘贴的地址与历史记录中的某个地址很像，但并不相同。",
+    "verify": "请务必核对合约地址：0x833589fcd6edb6e08f4c7c32d4f71b54bda02913（Base 上的 USDC）。"
+  },
+  "staking": {
+    "title": "质押奖励",
+    "apy": "预计年化收益率（APY）：{apy}%",
+    "unstake": "可随时解除质押。奖励每 24 小时可领取一次。"
+  },
+  "docs": {
+    "learnMore": "了解更多：https://docs.base.org",
+    "x402": "通过 x402 按次付费——无需注册账户，也无需 API 密钥。"
+  }
+}

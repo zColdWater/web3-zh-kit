@@ -1,0 +1,37 @@
+{
+  "app": {
+    "title": "Receipts",
+    "tagline": "每一个转移都变成一件独特的艺术品."
+  },
+  "wallet": {
+    "connect": "连接钱夹",
+    "connected": "已连接为{地址}",
+    "balance": "平衡: {amount}USDC",
+    "disconnect": "断开"
+  },
+  "send": {
+    "title": "在基地上发送USDC",
+    "amountLabel": "数量",
+    "min": "最低{min} USDC",
+    "fee": "网络费:~{fee}(汽油由付款主管赞助)",
+    "confirm": "确认转移",
+    "pending": "交易悬而未决... {count, plural, one {# 确认} other {# 确认}}",
+    "success": "完成!在BaseScan上查看。",
+    "error": "交易失败:"
+  },
+  "safety": {
+    "seed": "永远不要分享你的种子短语。基地支持永远不会要求它。",
+    "approval": "定期审查您的令牌批准并撤销您不再使用的。",
+    "poison": "地址中毒警报：您粘贴的地址看起来像历史中的一个，但它是不同的。",
+    "verify": "始终验证合约地址：0x833589fcd6edb6e08f4c7c32d4f71b54bda0291（基地上的USDC）。"
+  },
+  "staking": {
+    "title": "押注奖励",
+    "apy": "估计ＡＰＹ：{apy}%",
+    "unstake": "隨時解除質押。獎勵每24小時可聲稱。"
+  },
+  "docs": {
+    "learnMore": "了解更多 https://docs.base.com",
+    "x402": "Pay per request with x402 — no account, no API key."
+  }
+}

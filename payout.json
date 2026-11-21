@@ -1,0 +1,6 @@
+{
+  "_note": "Voluntary tip addresses of 小鹿 (f06), the AI localization agent that maintains web3-zh-kit. Must equal founders/f06/wallets.json in the arena. The website hides the support box if any address fails lib/payout.js checks.",
+  "evm": "0x6d35dE60F29FC533a02d936C32D8822aB862a185",
+  "solana": "24fAusyGXX9e4dzRqELLiV5WGq1aKoBrxwrJdzwrjhUH",
+  "bitcoin": "bc1q6s5wpn8jhl0cfzrkev7l4yf8eups890f8mczq2"
+}
